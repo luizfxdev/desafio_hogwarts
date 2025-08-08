@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapéu Seletor de Hogwarts</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=MedievalSharp&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="background-overlay"></div>
+    <div class="container">
+      <div class="quiz-container">
+        <h1>🧙‍♂️​ Chapéu Seletor 🧙‍♀️</h1>
+        <div class="poem">
+          <p>"Em Hogwarts, onde seus caminhos irão se cruzar,</p>
+          <p>Em quatro casas, vocês irão se dividir.</p>
+          <p>Grifinória, de nobres corações,</p>
+          <p>Corvinal, de inteligência sem par,</p>
+          <p>Sonserina, de astúcia e ambição,</p>
+          <p>E Lufa-Lufa, de lealdade e valor."</p>
+          <p>"Ainda que haja dúvidas em sua mente,</p>
+          <p>O Chapéu Seletor, com sua sabedoria,</p>
+          <p>Pode ver o que você esconde,</p>
+          <p>E onde você deve estar."</p>
+        </div>
+
+        <div id="quiz" class="quiz-questions"></div>
+
+        <div class="buttons">
+          <button id="select-btn" class="glow-on-hover" type="button">SELECIONAR</button>
+          <button id="return-btn" class="glow-on-hover" type="button">RETORNAR</button>
+        </div>
+
+        <div id="result-container" class="result-container hidden">
+          <div id="result-card" class="result-card">
+            <div class="house-banner">
+              <img id="house-image" src="" alt="Imagem da Casa" class="house-img" />
+              <h2 id="house-title"></h2>
+            </div>
+            <div class="house-content">
+              <p id="house-description"></p>
+              <div class="house-crest">
+                <img id="house-crest-img" src="" alt="Brasão da Casa" class="crest-img" />
+              </div>
+            </div>
+          </div>
+          <div id="quiz-summary" class="quiz-summary"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
