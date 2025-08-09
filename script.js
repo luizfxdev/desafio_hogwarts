@@ -73,7 +73,7 @@ const questions = [
       { text: 'Lufa-Lufa', house: 'hufflepuff' },
       { text: 'Sonserina', house: 'slytherin' }
     ],
-    weight: 3
+    weight: -3 // Peso negativo para subtrair pontos
   }
 ];
 
@@ -85,7 +85,7 @@ const houseAssets = {
       'Sua morada é a Grifinória, casa onde habitam os corações indômitos. Ousadia e sangue-frio e nobreza destacam os alunos da Grifinória dos demais.',
     color: 'gryffindor',
     bannerImage: '/images/grifinória.jpg',
-    crestImage: '/imges/grifbadge.png'
+    crestImage: '/images/grifbad.jpg'
   },
   slytherin: {
     name: 'Sonserina',
@@ -138,8 +138,6 @@ let housePoints = {
 // Initialize the quiz
 function initQuiz() {
   renderQuestion();
-
-  // Event listeners
   selectBtn.addEventListener('click', selectOption);
   returnBtn.addEventListener('click', resetQuiz);
 }
@@ -155,23 +153,16 @@ function renderQuestion() {
   let optionsHTML = '';
 
   question.options.forEach((option, index) => {
-    optionsHTML += `
-            <div class="option" data-index="${index}">
-                ${option.text}
-            </div>
-        `;
+    optionsHTML += `<div class="option" data-index="${index}">${option.text}</div>`;
   });
 
   quizContainer.innerHTML = `
-        <div class="question">
-            <h3>${question.question}</h3>
-            <div class="options">
-                ${optionsHTML}
-            </div>
-        </div>
-    `;
+    <div class="question">
+      <h3>${question.question}</h3>
+      <div class="options">${optionsHTML}</div>
+    </div>
+  `;
 
-  // Add click event to options
   document.querySelectorAll('.option').forEach(option => {
     option.addEventListener('click', function () {
       document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
@@ -183,7 +174,6 @@ function renderQuestion() {
 // Select option and move to next question
 function selectOption() {
   const selectedOption = document.querySelector('.option.selected');
-
   if (!selectedOption) {
     alert('Por favor, selecione uma opção antes de continuar.');
     return;
@@ -194,25 +184,21 @@ function selectOption() {
   const selectedHouse = currentQuestion.options[optionIndex].house;
   const weight = currentQuestion.weight || 1;
 
-  // Store selected option for summary
   selectedOptions.push({
     question: currentQuestion.question,
     answer: currentQuestion.options[optionIndex].text,
-    house: selectedHouse
+    house: selectedHouse,
+    weight: weight
   });
 
-  // Add points with weight
   housePoints[selectedHouse] += weight;
-
-  // Move to next question
   currentQuestionIndex++;
   renderQuestion();
 }
 
 // Show final results
 function showResults() {
-  // Determine the house with most points
-  let maxPoints = -1;
+  let maxPoints = -Infinity;
   let selectedHouse = '';
 
   for (const house in housePoints) {
@@ -223,35 +209,39 @@ function showResults() {
   }
 
   const house = houseAssets[selectedHouse];
-
-  // Display result with images
   resultContainer.classList.remove('hidden');
   resultCard.className = `result-card ${house.color}`;
   houseTitle.textContent = house.name;
   houseDescription.textContent = house.description;
+
   houseImage.src = house.bannerImage;
   houseImage.alt = `Imagem da ${house.name}`;
+  houseImage.onerror = function () {
+    this.src = 'https://via.placeholder.com/600x300?text=Imagem+da+Casa';
+  };
+
   houseCrestImg.src = house.crestImage;
   houseCrestImg.alt = `Brasão da ${house.name}`;
+  houseCrestImg.onerror = function () {
+    this.src = 'https://via.placeholder.com/150?text=Brasão';
+  };
 
-  // Display quiz summary
   let summaryHTML = '<h3>Resumo do seu Quiz</h3>';
-
   selectedOptions.forEach((item, index) => {
-    const weight = index === 6 ? 2 : index === 7 ? 3 : 1;
+    const pointsText =
+      item.weight > 0
+        ? `+${item.weight} ponto${item.weight > 1 ? 's' : ''} para ${item.house}`
+        : `${item.weight} ponto${item.weight < -1 ? 's' : ''} de ${item.house}`;
+
     summaryHTML += `
-            <div class="summary-item ${item.house}">
-                <p><strong>Pergunta ${index + 1}:</strong> ${item.question}</p>
-                <p><strong>Sua resposta:</strong> ${item.answer} (${weight} ponto${weight > 1 ? 's' : ''} para ${
-      item.house
-    })</p>
-            </div>
-        `;
+      <div class="summary-item ${item.house}">
+        <p><strong>Pergunta ${index + 1}:</strong> ${item.question}</p>
+        <p><strong>Sua resposta:</strong> ${item.answer} (${pointsText})</p>
+      </div>
+    `;
   });
 
   quizSummary.innerHTML = summaryHTML;
-
-  // Scroll to results
   resultContainer.scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -259,19 +249,10 @@ function showResults() {
 function resetQuiz() {
   currentQuestionIndex = 0;
   selectedOptions = [];
-  housePoints = {
-    gryffindor: 0,
-    slytherin: 0,
-    ravenclaw: 0,
-    hufflepuff: 0
-  };
-
+  housePoints = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
   resultContainer.classList.add('hidden');
   renderQuestion();
-
-  // Scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Initialize the quiz when page loads
 document.addEventListener('DOMContentLoaded', initQuiz);
