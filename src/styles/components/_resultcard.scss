@@ -1,0 +1,360 @@
+// src/styles/components/_resultcard.scss
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ===================================
+// ESTILOS DO COMPONENTE RESULT CARD
+// ===================================
+.result-card-container {
+  max-width: $result-card-max-width;
+  margin: 0 auto;
+  padding: $spacer;
+  position: relative;
+  // Efeitos de fundo e decoração
+  .sparkles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    .sparkle {
+      position: absolute;
+      border-radius: 50%;
+      background: map-get($sparkle-colors, gold);
+      opacity: 0.7;
+      @for $i from 1 through 6 {
+        &.sparkle-#{$i} {
+          animation-delay: #{$i * 0.3}s;
+        }
+      }
+    }
+  }
+}
+
+// Card principal do resultado
+// -----------------------------------
+.result-card {
+  @include responsive-card($spacer * 2); // Mantém o mixin base
+  position: relative;
+  z-index: 1;
+  background: $white; // Fundo do card
+  border-radius: $border-radius-xl;
+  overflow: hidden;
+  box-shadow: $box-shadow-lg; // Sombra mais pronunciada
+  border: 4px solid var(--house-primary); // Borda da cor da casa
+  // Nova seção para o banner e brasão
+  .house-identity-section {
+    position: relative;
+    width: 100%;
+    // Altura combinada do banner e espaço para o brasão
+    min-height: $banner-height + ($crest-size / 2); // Ajuste conforme a sobreposição desejada
+    // AQUI ESTÁ A MUDANÇA: Usando a nova variável CSS --house-primary-darkened
+    background: linear-gradient(180deg, var(--house-gradient), var(--house-primary-darkened));
+    border-radius: $border-radius-xl $border-radius-xl 0 0;
+    overflow: hidden;
+    padding-bottom: $crest-size / 2; // Espaço para o brasão "invadir" o corpo
+    // Pseudo-elemento para um efeito de "moldura mágica"
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(var(--house-primary-rgb), 0.1); // Cor da casa com transparência
+      pointer-events: none;
+      z-index: 2;
+    }
+  }
+  // Banner da casa
+  .card-banner {
+    width: 100%;
+    height: $banner-height; // Altura do banner
+    overflow: hidden;
+    position: relative;
+    z-index: 1; // Garante que o banner esteja abaixo do brasão (se sobrepor)
+    border-bottom: 2px solid rgba(var(--house-primary-rgb), 0.3); // Linha sutil abaixo do banner
+    .house-banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    // Fallback se a imagem não carregar
+    &::after {
+      content: '🏰';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      z-index: -1;
+      color: $light-gray;
+    }
+  }
+  // Container do brasão
+  .crest-container {
+    position: absolute;
+    bottom: 0; // Posiciona na parte inferior da house-identity-section
+    left: 50%;
+    transform: translate(-50%, 50%); // Move para baixo pela metade da sua altura, criando sobreposição
+    z-index: 10; // Garante que o brasão esteja acima de tudo
+    background: $white; // Fundo para o brasão
+    border-radius: 50%;
+    padding: $spacer * 0.25; // Pequeno padding para a borda
+    .house-crest {
+      width: $crest-size * 1.2; // Aumenta o tamanho do brasão
+      height: $crest-size * 1.2;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 5px solid var(--house-primary); // Borda com a cor primária da casa
+      box-shadow: $box-shadow-magical; // Sombra mágica
+      background: $white; // Fundo branco para o brasão
+      @include smooth-transition();
+      &:hover {
+        transform: scale(1.08) rotate(3deg);
+        box-shadow: 0 10px 30px rgba(var(--house-primary-rgb), 0.4); // Sombra de hover mais intensa
+      }
+      @media (max-width: map-get($grid-breakpoints, sm)) {
+        width: $crest-size; // Ajusta para telas menores
+        height: $crest-size;
+      }
+    }
+  }
+  // Corpo do card
+  .card-body {
+    padding: $spacer * 2 0 $spacer; // Adiciona padding no topo para compensar o brasão
+    margin-top: $crest-size / 2; // Empurra o conteúdo para baixo para não sobrepor o brasão
+  }
+  // Estilos específicos por casa (mantidos, mas garantindo que as variáveis CSS estão sendo usadas)
+  &.house-gryffindor {
+    @include house-colors('gryffindor');
+  }
+  &.house-slytherin {
+    @include house-colors('slytherin');
+  }
+  &.house-ravenclaw {
+    @include house-colors('ravenclaw');
+  }
+  &.house-hufflepuff {
+    @include house-colors('hufflepuff');
+  }
+}
+// Títulos do resultado (mantidos)
+// -----------------------------------
+.house-title {
+  font-family: $font-family-heading;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacer;
+  @include magical-text();
+}
+.house-name {
+  font-family: $font-family-magical;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  margin-bottom: $spacer * 1.5;
+  strong {
+    font-size: clamp(1.5rem, 5vw, 2.25rem);
+    display: block;
+    margin-top: $spacer * 0.5;
+  }
+}
+// Cores específicas para cada casa nos textos
+.text-gryffindor {
+  @include house-text('gryffindor');
+}
+.text-slytherin {
+  @include house-text('slytherin');
+}
+.text-ravenclaw {
+  @include house-text('ravenclaw');
+}
+.text-hufflepuff {
+  @include house-text('hufflepuff');
+}
+// Descrição da casa (mantida)
+// -----------------------------------
+.house-description {
+  font-size: $font-size-lg;
+  line-height: 1.6;
+  color: $dark-gray;
+  font-style: italic;
+  border-left: 3px solid $warning;
+  padding-left: $spacer;
+  margin: $spacer * 1.5 0;
+}
+// Características da casa (mantidas)
+// -----------------------------------
+.house-traits {
+  .traits-list {
+    @include flex-center();
+    flex-wrap: wrap;
+    gap: $spacer * 0.5;
+    .badge {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      padding: $spacer * 0.5 $spacer;
+      border-radius: $border-radius-lg;
+      @include smooth-transition();
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: $box-shadow;
+      }
+      // Badges específicos por casa
+      &.bg-gryffindor {
+        @include house-background('gryffindor');
+        color: $white;
+      }
+      &.bg-slytherin {
+        @include house-background('slytherin');
+        color: $white;
+      }
+      &.bg-ravenclaw {
+        @include house-background('ravenclaw');
+        color: $white;
+      }
+      &.bg-hufflepuff {
+        @include house-background('hufflepuff');
+        color: $white;
+      }
+    }
+  }
+}
+// Informações da casa (mantidas)
+// -----------------------------------
+.house-info {
+  background: rgba($light-gray, 0.5);
+  border-radius: $border-radius-lg;
+  padding: $spacer * 1.5;
+  .row > div {
+    @media (max-width: map-get($grid-breakpoints, md)) {
+      text-align: center;
+    }
+  }
+  strong {
+    color: $dark-gray;
+    font-weight: $font-weight-semibold;
+  }
+}
+// Pontuação detalhada (mantida)
+// -----------------------------------
+.scores-breakdown {
+  background: $light-gray;
+  border-radius: $border-radius-lg;
+  padding: $spacer * 1.5;
+  h6 {
+    color: $dark-gray;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacer;
+  }
+  .score-item {
+    text-align: center;
+    padding: $spacer * 0.5;
+    border-radius: $border-radius;
+    background: $white;
+    @include smooth-transition();
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $box-shadow;
+    }
+    &.winner {
+      background: linear-gradient(135deg, $warning, lighten($warning, 10%));
+      color: $white;
+      box-shadow: $box-shadow-magical;
+      .score-house {
+        color: $white !important;
+        font-weight: $font-weight-bold;
+      }
+    }
+    .score-house {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      margin-bottom: $spacer * 0.25;
+    }
+    .score-points {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+  }
+}
+// Botão de reiniciar (mantido)
+// -----------------------------------
+.restart-btn {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  padding: $spacer * 0.75 $spacer * 2;
+  border-radius: $border-radius-lg;
+  border: 2px solid $info;
+  @include smooth-transition();
+  &:hover {
+    background: $info;
+    border-color: $info;
+    color: $white;
+    transform: translateY(-2px);
+    box-shadow: $box-shadow-lg;
+  }
+  &:active {
+    transform: translateY(0);
+  }
+  i {
+    @include smooth-transition(transform);
+  }
+  &:hover i {
+    transform: rotate(180deg);
+  }
+}
+// Animações específicas do resultado (mantidas)
+// -----------------------------------
+@keyframes resultFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotateY(-90deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
+  }
+}
+@keyframes celebrationPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+// Responsividade (ajustada para a nova estrutura)
+// -----------------------------------
+@media (max-width: map-get($grid-breakpoints, sm)) {
+  .result-card {
+    margin: $spacer * 0.5;
+    .house-identity-section {
+      min-height: $banner-height * 0.7 + ($crest-size * 0.8 / 2);
+      padding-bottom: $crest-size * 0.8 / 2;
+    }
+    .card-banner {
+      height: $banner-height * 0.7; // Reduz a altura do banner em telas menores
+    }
+    .crest-container {
+      transform: translate(-50%, 50%); // Mantém a sobreposição
+    }
+    .card-body {
+      padding: $spacer * 1.5 0 $spacer; // Ajusta padding
+      margin-top: $crest-size * 0.8 / 2; // Ajusta margin
+    }
+    .house-description {
+      font-size: $font-size-base;
+    }
+    .house-info,
+    .scores-breakdown {
+      padding: $spacer;
+    }
+    .restart-btn {
+      font-size: $font-size-base;
+      padding: $spacer * 0.5 $spacer * 1.5;
+    }
+  }
+}

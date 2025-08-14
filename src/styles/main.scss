@@ -1,13 +1,24 @@
-@use 'abstracts/variables' as *;
-@use 'abstracts/mixins' as *;
+// src/styles/main.scss
+
+// ===================================
+// IMPORTAÇÕES DE ABSTRATOS E BASES
+// ===================================
+@use 'abstracts/variables' as *; // Variáveis devem ser importadas primeiro
+@use 'abstracts/mixins' as *; // Mixins devem ser importados depois das variáveis
+
 @use 'base/reset';
+@use 'base/typography'; // Arquivo de tipografia importado
+
+// ===================================
+// IMPORTAÇÕES DE COMPONENTES E PÁGINAS
+// ===================================
 @use 'components/question';
 @use 'components/resultcard';
+// ... outros componentes como _buttons.scss, _layout.scss, etc.
 
 // ===================================
 // ARQUIVO PRINCIPAL DE ESTILOS - QUIZ HOGWARTS
 // ===================================
-
 // Importação das fontes do Google Fonts e Font Awesome
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Cinzel:wght@400;500;600;700&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
@@ -70,7 +81,6 @@
 // ===================================
 // ESTILOS ESPECÍFICOS DA APLICAÇÃO
 // ===================================
-
 // Container da página About
 // -----------------------------------
 .about-container {
@@ -180,10 +190,49 @@
   }
 }
 
+// Botão de reiniciar (Movido para cá, idealmente em um arquivo de botões)
+// -----------------------------------
+.restart-btn {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  padding: $spacer * 0.75 $spacer * 2;
+  border-radius: $border-radius-lg;
+  border: 2px solid $info;
+  @include smooth-transition();
+  &:hover {
+    background: $info;
+    border-color: $info;
+    color: $white;
+    transform: translateY(-2px);
+    box-shadow: $box-shadow-lg;
+  }
+  &:active {
+    transform: translateY(0);
+  }
+  i {
+    @include smooth-transition(transform);
+  }
+  &:hover i {
+    transform: rotate(180deg);
+  }
+}
+
+// Animações específicas do resultado (Movido para cá, idealmente em um arquivo de animações ou no resultcard.scss)
+// -----------------------------------
+@keyframes resultFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotateY(-90deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
+  }
+}
+
 // ===================================
 // CLASSES UTILITÁRIAS CUSTOMIZADAS
 // ===================================
-
 // Classes de texto para as casas
 // -----------------------------------
 .text-gryffindor {

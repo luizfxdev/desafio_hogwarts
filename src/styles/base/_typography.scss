@@ -1,0 +1,73 @@
+// src/styles/base/_typography.scss
+
+// Importa as variáveis para este arquivo
+@use '../abstracts/variables' as *;
+
+// Estilos globais de tipografia
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: $spacer;
+  color: $dark-gray;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h3 {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+p {
+  margin-bottom: $spacer;
+  line-height: 1.7;
+  color: $medium-gray;
+}
+
+// Links
+a {
+  color: $info;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Classes de texto utilitárias
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-muted {
+  color: $medium-gray !important;
+}
+
+.text-primary {
+  color: $info !important;
+}
+
+.text-warning {
+  color: $warning !important;
+}
+
+// Adicione mais estilos de tipografia conforme necessário

@@ -1,50 +1,64 @@
+// src/styles/abstracts/_variables.scss
+
 // ===================================
-// VARIÁVEIS DO QUIZ DE HOGWARTS
+// VARIÁVEIS DE CORES
 // ===================================
-
-// Cores das Casas de Hogwarts
-// -----------------------------------
-$gryffindor-primary: #740001;
-$gryffindor-secondary: #d3a625;
-$gryffindor-gradient: linear-gradient(135deg, $gryffindor-primary, $gryffindor-secondary);
-
-$slytherin-primary: #1a472a;
-$slytherin-secondary: #aaaaaa;
-$slytherin-gradient: linear-gradient(135deg, $slytherin-primary, $slytherin-secondary);
-
-$ravenclaw-primary: #0e1a40;
-$ravenclaw-secondary: #946b2d;
-$ravenclaw-gradient: linear-gradient(135deg, $ravenclaw-primary, $ravenclaw-secondary);
-
-$hufflepuff-primary: #ecb939;
-$hufflepuff-secondary: #372e29;
-$hufflepuff-gradient: linear-gradient(135deg, $hufflepuff-primary, $hufflepuff-secondary);
-
-// Cores Neutras
-// -----------------------------------
 $white: #ffffff;
 $black: #000000;
-$light-gray: #f8f9fa;
-$medium-gray: #6c757d;
-$dark-gray: #343a40;
+$dark-gray: #333333;
+$medium-gray: #666666;
+$light-gray: #f0f0f0;
 
-// Cores de Estado
-// -----------------------------------
-$success: #28a745;
-$warning: #ffc107;
-$danger: #dc3545;
-$info: #17a2b8;
+$warning: #ffc107; // Amarelo para alertas/destaques
+$info: #17a2b8; // Azul para informações/botões
 
-// Tipografia
-// -----------------------------------
-$font-family-base: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-$font-family-heading: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-$font-family-magical: 'Cinzel', 'Times New Roman', serif;
+// Cores das Casas de Hogwarts
+$gryffindor-primary: #740001; // Vermelho escuro
+$gryffindor-secondary: #eeba30; // Dourado
+$gryffindor-gradient: linear-gradient(135deg, #740001, #a70002); // Exemplo de gradiente
 
-$font-size-base: 16px;
-$font-size-sm: 14px;
-$font-size-lg: 18px;
-$font-size-xl: 20px;
+$slytherin-primary: #1a472a; // Verde escuro
+$slytherin-secondary: #aaaaaa; // Prata
+$slytherin-gradient: linear-gradient(135deg, #1a472a, #2a633d);
+
+$ravenclaw-primary: #0e1a40; // Azul marinho
+$ravenclaw-secondary: #946b2d; // Bronze
+$ravenclaw-gradient: linear-gradient(135deg, #0e1a40, #1b3260);
+
+$hufflepuff-primary: #ecb939; // Amarelo
+$hufflepuff-secondary: #372e29; // Preto
+$hufflepuff-gradient: linear-gradient(135deg, #ecb939, #f7d264);
+
+// ===================================
+// VARIÁVEIS DE ESPAÇAMENTO E TAMANHOS
+// ===================================
+$spacer: 1rem; // Base para espaçamento (16px)
+
+$border-radius: 0.25rem;
+$border-radius-lg: 0.5rem;
+$border-radius-xl: 1rem;
+
+$border-width: 1px; // Adicionado: Largura padrão da borda
+$border-style: solid; // Adicionado: Estilo padrão da borda
+
+$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+$box-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+$box-shadow-magical: 0 10px 20px rgba(0, 0, 0, 0.2); // Exemplo de sombra mágica
+
+$banner-height: 150px; // Altura do banner
+$crest-size: 100px; // Tamanho base do brasão
+$result-card-max-width: 900px; // Largura máxima do card de resultado
+
+// ===================================
+// VARIÁVEIS DE TIPOGRAFIA
+// ===================================
+$font-family-base: 'Inter', sans-serif;
+$font-family-heading: 'Cinzel', serif;
+$font-family-magical: 'Poppins', sans-serif; // Ou 'Fantasy', 'cursive' se tiver uma fonte específica
+
+$font-size-base: 1rem;
+$font-size-sm: 0.875rem;
+$font-size-lg: 1.125rem;
 
 $font-weight-light: 300;
 $font-weight-normal: 400;
@@ -52,61 +66,9 @@ $font-weight-medium: 500;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
-// Espaçamentos
-// -----------------------------------
-$spacer: 1rem;
-$spacers: (
-  0: 0,
-  1: $spacer * 0.25,
-  // 4px
-  2: $spacer * 0.5,
-  // 8px
-  3: $spacer,
-  // 16px
-  4: $spacer * 1.5,
-  // 24px
-  5: $spacer * 3,
-  // 48px
-  6: $spacer * 4,
-  // 64px
-  7: $spacer * 5 // 80px
-);
-
-// Bordas e Raios
-// -----------------------------------
-$border-radius-sm: 0.375rem;
-$border-radius: 0.5rem;
-$border-radius-lg: 0.75rem;
-$border-radius-xl: 1rem;
-
-$border-width: 1px;
-$border-style: solid;
-
-// Sombras
-// -----------------------------------
-$box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075);
-$box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
-$box-shadow-lg: 0 1rem 3rem rgba($black, 0.175);
-$box-shadow-magical: 0 0.5rem 1rem rgba(gold, 0.2);
-
-// Transições
-// -----------------------------------
-$transition-base: all 0.3s ease;
-$transition-fast: all 0.15s ease-in-out;
-$transition-slow: all 0.6s ease;
-
-// Z-index
-// -----------------------------------
-$z-index-dropdown: 1000;
-$z-index-sticky: 1020;
-$z-index-fixed: 1030;
-$z-index-modal-backdrop: 1040;
-$z-index-modal: 1050;
-$z-index-popover: 1060;
-$z-index-tooltip: 1070;
-
-// Breakpoints Responsivos
-// -----------------------------------
+// ===================================
+// VARIÁVEIS DE BREAKPOINTS (para responsividade)
+// ===================================
 $grid-breakpoints: (
   xs: 0,
   sm: 576px,
@@ -116,41 +78,11 @@ $grid-breakpoints: (
   xxl: 1400px
 );
 
-// Container Max Widths
-// -----------------------------------
-$container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1140px,
-  xxl: 1320px
-);
-
-// Configurações do Quiz
-// -----------------------------------
-$quiz-max-width: 800px;
-$question-card-height: auto;
-$result-card-max-width: 600px;
-
-// Animações
-// -----------------------------------
-$animation-duration-fast: 0.2s;
-$animation-duration-normal: 0.3s;
-$animation-duration-slow: 0.5s;
-$animation-easing: ease-in-out;
-
-// Elementos Específicos
-// -----------------------------------
-$progress-height: 8px;
-$option-button-height: 60px;
-$crest-size: 150px;
-$banner-height: 120px;
-
-// Efeitos Visuais
-// -----------------------------------
+// ===================================
+// OUTRAS VARIÁVEIS ESPECÍFICAS
+// ===================================
 $sparkle-colors: (
   gold: #ffd700,
   silver: #c0c0c0,
-  bronze: #cd7f32,
-  magic: #9b59b6
+  bronze: #cd7f32
 );

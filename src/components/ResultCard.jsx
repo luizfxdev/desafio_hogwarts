@@ -29,7 +29,7 @@ const ResultCard = ({ house, scores, onRestart }) => {
       transition: {
         duration: 0.8,
         ease: 'easeOut',
-        staggerChildren: 0.2
+        staggerChildren: 0.15 // Ajustado para um fluxo mais suave
       }
     }
   };
@@ -42,7 +42,7 @@ const ResultCard = ({ house, scores, onRestart }) => {
     animate: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6 }
+      transition: { duration: 0.5, ease: 'easeOut' } // Ajustado duração
     }
   };
 
@@ -75,7 +75,7 @@ const ResultCard = ({ house, scores, onRestart }) => {
 
   return (
     <motion.div className="result-card-container" variants={cardVariants} initial="initial" animate="animate">
-      {/* Efeitos de fundo */}
+      {/* Efeitos de fundo (mantidos) */}
       <div className="sparkles">
         {[...Array(6)].map((_, i) => (
           <motion.div
@@ -95,22 +95,24 @@ const ResultCard = ({ house, scores, onRestart }) => {
           />
         ))}
       </div>
+
       <div className={`result-card house-${house}`}>
-        {/* Header com banner da casa */}
-        <motion.div className="card-header" variants={elementVariants}>
-          <img
-            src={bannerPath}
-            alt={`Banner da ${houseInfo.name}`}
-            className="house-banner"
-            onError={e => {
-              e.target.style.display = 'none';
-            }}
-          />
-        </motion.div>
-        {/* Corpo do card com informações da casa */}
-        <div className="card-body text-center">
-          {/* Brasão da casa */}
-          <motion.div className="crest-container mb-4" variants={imageVariants}>
+        {/* Nova seção para o banner e brasão */}
+        <div className="house-identity-section">
+          {/* Banner da casa */}
+          <motion.div className="card-banner" variants={elementVariants}>
+            <img
+              src={bannerPath}
+              alt={`Banner da ${houseInfo.name}`}
+              className="house-banner-img"
+              onError={e => {
+                e.target.style.display = 'none';
+              }}
+            />
+          </motion.div>
+
+          {/* Brasão da casa - Posicionado abaixo do banner */}
+          <motion.div className="crest-container" variants={imageVariants}>
             <img
               src={crestPath}
               alt={`Brasão da ${houseInfo.name}`}
@@ -120,6 +122,10 @@ const ResultCard = ({ house, scores, onRestart }) => {
               }}
             />
           </motion.div>
+        </div>
+
+        {/* Corpo do card com informações da casa */}
+        <div className="card-body text-center">
           {/* Título de resultado */}
           <motion.h1 className={`house-title text-${house}`} variants={elementVariants}>
             🎉 Parabéns! 🎉
