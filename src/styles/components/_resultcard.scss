@@ -1,6 +1,8 @@
 // src/styles/components/_resultcard.scss
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
+@use 'sass:map'; // Adicionado para map.get
+@use 'sass:math'; // Adicionado para math.div
 
 // ===================================
 // ESTILOS DO COMPONENTE RESULT CARD
@@ -22,7 +24,7 @@
     .sparkle {
       position: absolute;
       border-radius: 50%;
-      background: map-get($sparkle-colors, gold);
+      background: map.get($sparkle-colors, gold); // Usando map.get
       opacity: 0.7;
       @for $i from 1 through 6 {
         &.sparkle-#{$i} {
@@ -49,12 +51,12 @@
     position: relative;
     width: 100%;
     // Altura combinada do banner e espaço para o brasão
-    min-height: $banner-height + ($crest-size / 2); // Ajuste conforme a sobreposição desejada
+    min-height: $banner-height + math.div($crest-size, 2); // Usando math.div
     // AQUI ESTÁ A MUDANÇA: Usando a nova variável CSS --house-primary-darkened
     background: linear-gradient(180deg, var(--house-gradient), var(--house-primary-darkened));
     border-radius: $border-radius-xl $border-radius-xl 0 0;
     overflow: hidden;
-    padding-bottom: $crest-size / 2; // Espaço para o brasão "invadir" o corpo
+    padding-bottom: math.div($crest-size, 2); // Usando math.div
     // Pseudo-elemento para um efeito de "moldura mágica"
     &::before {
       content: '';
@@ -117,7 +119,8 @@
         transform: scale(1.08) rotate(3deg);
         box-shadow: 0 10px 30px rgba(var(--house-primary-rgb), 0.4); // Sombra de hover mais intensa
       }
-      @media (max-width: map-get($grid-breakpoints, sm)) {
+      @media (max-width: map.get($grid-breakpoints, sm)) {
+        // Usando map.get
         width: $crest-size; // Ajusta para telas menores
         height: $crest-size;
       }
@@ -126,7 +129,7 @@
   // Corpo do card
   .card-body {
     padding: $spacer * 2 0 $spacer; // Adiciona padding no topo para compensar o brasão
-    margin-top: $crest-size / 2; // Empurra o conteúdo para baixo para não sobrepor o brasão
+    margin-top: math.div($crest-size, 2); // Usando math.div
   }
   // Estilos específicos por casa (mantidos, mas garantindo que as variáveis CSS estão sendo usadas)
   &.house-gryffindor {
@@ -142,6 +145,7 @@
     @include house-colors('hufflepuff');
   }
 }
+
 // Títulos do resultado (mantidos)
 // -----------------------------------
 .house-title {
@@ -151,6 +155,7 @@
   margin-bottom: $spacer;
   @include magical-text();
 }
+
 .house-name {
   font-family: $font-family-magical;
   font-size: clamp(1.25rem, 4vw, 1.75rem);
@@ -161,19 +166,24 @@
     margin-top: $spacer * 0.5;
   }
 }
+
 // Cores específicas para cada casa nos textos
 .text-gryffindor {
   @include house-text('gryffindor');
 }
+
 .text-slytherin {
   @include house-text('slytherin');
 }
+
 .text-ravenclaw {
   @include house-text('ravenclaw');
 }
+
 .text-hufflepuff {
   @include house-text('hufflepuff');
 }
+
 // Descrição da casa (mantida)
 // -----------------------------------
 .house-description {
@@ -185,6 +195,7 @@
   padding-left: $spacer;
   margin: $spacer * 1.5 0;
 }
+
 // Características da casa (mantidas)
 // -----------------------------------
 .house-traits {
@@ -222,6 +233,7 @@
     }
   }
 }
+
 // Informações da casa (mantidas)
 // -----------------------------------
 .house-info {
@@ -229,7 +241,8 @@
   border-radius: $border-radius-lg;
   padding: $spacer * 1.5;
   .row > div {
-    @media (max-width: map-get($grid-breakpoints, md)) {
+    @media (max-width: map.get($grid-breakpoints, md)) {
+      // Usando map.get
       text-align: center;
     }
   }
@@ -238,6 +251,7 @@
     font-weight: $font-weight-semibold;
   }
 }
+
 // Pontuação detalhada (mantida)
 // -----------------------------------
 .scores-breakdown {
@@ -279,6 +293,7 @@
     }
   }
 }
+
 // Botão de reiniciar (mantido)
 // -----------------------------------
 .restart-btn {
@@ -305,6 +320,7 @@
     transform: rotate(180deg);
   }
 }
+
 // Animações específicas do resultado (mantidas)
 // -----------------------------------
 @keyframes resultFadeIn {
@@ -317,6 +333,7 @@
     transform: scale(1) rotateY(0deg);
   }
 }
+
 @keyframes celebrationPulse {
   0%,
   100% {
@@ -326,14 +343,16 @@
     transform: scale(1.05);
   }
 }
+
 // Responsividade (ajustada para a nova estrutura)
 // -----------------------------------
-@media (max-width: map-get($grid-breakpoints, sm)) {
+@media (max-width: map.get($grid-breakpoints, sm)) {
+  // Usando map.get
   .result-card {
     margin: $spacer * 0.5;
     .house-identity-section {
-      min-height: $banner-height * 0.7 + ($crest-size * 0.8 / 2);
-      padding-bottom: $crest-size * 0.8 / 2;
+      min-height: $banner-height * 0.7 + math.div($crest-size * 0.8, 2); // Usando math.div
+      padding-bottom: math.div($crest-size * 0.8, 2); // Usando math.div
     }
     .card-banner {
       height: $banner-height * 0.7; // Reduz a altura do banner em telas menores
@@ -343,7 +362,7 @@
     }
     .card-body {
       padding: $spacer * 1.5 0 $spacer; // Ajusta padding
-      margin-top: $crest-size * 0.8 / 2; // Ajusta margin
+      margin-top: math.div($crest-size * 0.8, 2); // Usando math.div
     }
     .house-description {
       font-size: $font-size-base;

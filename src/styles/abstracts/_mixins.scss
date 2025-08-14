@@ -1,5 +1,6 @@
 // src/styles/abstracts/_mixins.scss
 @use 'variables' as *;
+@use 'sass:color'; // Adicionado para color.adjust e color.channel
 
 // Mixin para centralizar conteúdo flex
 @mixin flex-center {
@@ -35,26 +36,30 @@
     --house-primary: #{$gryffindor-primary};
     --house-secondary: #{$gryffindor-secondary};
     --house-gradient: #{$gryffindor-gradient};
-    --house-primary-darkened: #{darken($gryffindor-primary, 20%)}; // Calcula e define a variável CSS
-    --house-primary-rgb: #{red($gryffindor-primary)}, #{green($gryffindor-primary)}, #{blue($gryffindor-primary)};
+    --house-primary-darkened: #{color.adjust($gryffindor-primary, $lightness: -20%)}; // Usando color.adjust
+    --house-primary-rgb: #{color.channel($gryffindor-primary, 'red')}, #{color.channel($gryffindor-primary, 'green')},
+      #{color.channel($gryffindor-primary, 'blue')};
   } @else if $house == 'slytherin' {
     --house-primary: #{$slytherin-primary};
     --house-secondary: #{$slytherin-secondary};
     --house-gradient: #{$slytherin-gradient};
-    --house-primary-darkened: #{darken($slytherin-primary, 20%)};
-    --house-primary-rgb: #{red($slytherin-primary)}, #{green($slytherin-primary)}, #{blue($slytherin-primary)};
+    --house-primary-darkened: #{color.adjust($slytherin-primary, $lightness: -20%)};
+    --house-primary-rgb: #{color.channel($slytherin-primary, 'red')}, #{color.channel($slytherin-primary, 'green')},
+      #{color.channel($slytherin-primary, 'blue')};
   } @else if $house == 'ravenclaw' {
     --house-primary: #{$ravenclaw-primary};
     --house-secondary: #{$ravenclaw-secondary};
     --house-gradient: #{$ravenclaw-gradient};
-    --house-primary-darkened: #{darken($ravenclaw-primary, 20%)};
-    --house-primary-rgb: #{red($ravenclaw-primary)}, #{green($ravenclaw-primary)}, #{blue($ravenclaw-primary)};
+    --house-primary-darkened: #{color.adjust($ravenclaw-primary, $lightness: -20%)};
+    --house-primary-rgb: #{color.channel($ravenclaw-primary, 'red')}, #{color.channel($ravenclaw-primary, 'green')},
+      #{color.channel($ravenclaw-primary, 'blue')};
   } @else if $house == 'hufflepuff' {
     --house-primary: #{$hufflepuff-primary};
     --house-secondary: #{$hufflepuff-secondary};
     --house-gradient: #{$hufflepuff-gradient};
-    --house-primary-darkened: #{darken($hufflepuff-primary, 20%)};
-    --house-primary-rgb: #{red($hufflepuff-primary)}, #{green($hufflepuff-primary)}, #{blue($hufflepuff-primary)};
+    --house-primary-darkened: #{color.adjust($hufflepuff-primary, $lightness: -20%)};
+    --house-primary-rgb: #{color.channel($hufflepuff-primary, 'red')}, #{color.channel($hufflepuff-primary, 'green')},
+      #{color.channel($hufflepuff-primary, 'blue')};
   }
 }
 
