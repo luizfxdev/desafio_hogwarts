@@ -1,0 +1,404 @@
+// ===================================
+// ARQUIVO PRINCIPAL DE ESTILOS - QUIZ HOGWARTS
+// ===================================
+
+// Importação das fontes do Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Cinzel:wght@400;500;600;700&display=swap');
+
+// Font Awesome para ícones
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+// Importações dos abstracts
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+
+// Importações da base
+@import 'base/reset';
+
+// Importações dos componentes
+@import 'components/question';
+@import 'components/resultcard';
+
+// ===================================
+// ESTILOS GLOBAIS
+// ===================================
+
+// Container principal da aplicação
+// -----------------------------------
+#root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, lighten($light-gray, 2%), darken($light-gray, 3%));
+
+  // Pattern de fundo sutil
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 25% 25%, rgba($warning, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba($info, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+// Container principal do quiz
+// -----------------------------------
+.quiz-container {
+  min-height: 100vh;
+  padding: $spacer * 2 0;
+
+  @media (max-width: map-get($grid-breakpoints, md)) {
+    padding: $spacer 0;
+  }
+}
+
+// Header principal do quiz
+// -----------------------------------
+.quiz-header {
+  margin-bottom: $spacer * 3;
+
+  .quiz-main-title {
+    font-family: $font-family-magical;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: $font-weight-bold;
+    @include magical-text(3rem);
+    text-shadow: 2px 2px 4px rgba($black, 0.3);
+    margin-bottom: $spacer;
+
+    @media (max-width: map-get($grid-breakpoints, sm)) {
+      font-size: 2rem;
+    }
+  }
+
+  .quiz-subtitle {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+    color: $medium-gray;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+// ===================================
+// ESTILOS ESPECÍFICOS DA APLICAÇÃO
+// ===================================
+
+// Container da página About
+// -----------------------------------
+.about-container {
+  min-height: 100vh;
+  padding: $spacer * 2 0;
+
+  .about-header {
+    margin-bottom: $spacer * 4;
+
+    .display-4 {
+      font-family: $font-family-magical;
+      @include magical-text(2.5rem);
+      text-shadow: 2px 2px 4px rgba($black, 0.3);
+    }
+
+    .lead {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  .about-section {
+    .card {
+      @include responsive-card($spacer * 2);
+      border: none;
+      box-shadow: $box-shadow-lg;
+      @include smooth-transition();
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1.5rem 4rem rgba($black, 0.15);
+      }
+
+      .card-title {
+        font-family: $font-family-heading;
+        font-weight: $font-weight-semibold;
+        color: $dark-gray;
+        margin-bottom: $spacer;
+
+        i {
+          margin-right: $spacer * 0.5;
+        }
+      }
+
+      .card-text {
+        line-height: 1.7;
+        color: lighten($dark-gray, 10%);
+      }
+    }
+  }
+}
+
+// Cards das casas na página About
+// -----------------------------------
+.house-card {
+  height: 100%;
+  @include smooth-transition();
+  border: none !important;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: $box-shadow-lg;
+  }
+
+  .card-body {
+    padding: $spacer * 1.5;
+  }
+
+  .card-title {
+    font-family: $font-family-heading;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacer;
+  }
+
+  &.gryffindor-card {
+    border-left: 4px solid $gryffindor-primary !important;
+
+    .card-title {
+      color: $gryffindor-primary;
+    }
+  }
+
+  &.slytherin-card {
+    border-left: 4px solid $slytherin-primary !important;
+
+    .card-title {
+      color: $slytherin-primary;
+    }
+  }
+
+  &.ravenclaw-card {
+    border-left: 4px solid $ravenclaw-primary !important;
+
+    .card-title {
+      color: $ravenclaw-primary;
+    }
+  }
+
+  &.hufflepuff-card {
+    border-left: 4px solid $hufflepuff-primary !important;
+
+    .card-title {
+      color: $hufflepuff-primary;
+    }
+  }
+}
+
+// Call to action na página About
+// -----------------------------------
+.about-cta {
+  .alert {
+    @include responsive-card($spacer * 2);
+    border: 2px solid $warning;
+    background: linear-gradient(135deg, rgba($warning, 0.1), rgba($warning, 0.05));
+    border-radius: $border-radius-xl;
+
+    .alert-heading {
+      font-family: $font-family-heading;
+      font-weight: $font-weight-semibold;
+      color: darken($warning, 20%);
+    }
+
+    em {
+      font-style: italic;
+      color: $medium-gray;
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+// ===================================
+// CLASSES UTILITÁRIAS CUSTOMIZADAS
+// ===================================
+
+// Classes de texto para as casas
+// -----------------------------------
+.text-gryffindor {
+  color: $gryffindor-primary !important;
+}
+.text-slytherin {
+  color: $slytherin-primary !important;
+}
+.text-ravenclaw {
+  color: $ravenclaw-primary !important;
+}
+.text-hufflepuff {
+  color: $hufflepuff-primary !important;
+}
+
+// Classes de background para as casas
+// -----------------------------------
+.bg-gryffindor {
+  background-color: $gryffindor-primary !important;
+  color: $white;
+}
+.bg-slytherin {
+  background-color: $slytherin-primary !important;
+  color: $white;
+}
+.bg-ravenclaw {
+  background-color: $ravenclaw-primary !important;
+  color: $white;
+}
+.bg-hufflepuff {
+  background-color: $hufflepuff-primary !important;
+  color: $dark-gray;
+}
+
+// Classes de borda para as casas
+// -----------------------------------
+.border-gryffindor {
+  border-color: $gryffindor-primary !important;
+}
+.border-slytherin {
+  border-color: $slytherin-primary !important;
+}
+.border-ravenclaw {
+  border-color: $ravenclaw-primary !important;
+}
+.border-hufflepuff {
+  border-color: $hufflepuff-primary !important;
+}
+
+// Animações globais
+// -----------------------------------
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes magicalSparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes gentleFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+// Classes de animação
+// -----------------------------------
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.fade-in-scale {
+  animation: fadeInScale 0.5s ease-out;
+}
+
+.gentle-float {
+  animation: gentleFloat 3s ease-in-out infinite;
+}
+
+// Melhorias de acessibilidade
+// -----------------------------------
+.focus-visible {
+  outline: 2px solid $info;
+  outline-offset: 2px;
+}
+
+// Modo de alto contraste
+@media (prefers-contrast: high) {
+  .quiz-main-title {
+    text-shadow: none;
+    color: $black;
+  }
+
+  .option-btn {
+    border-width: 3px;
+  }
+
+  .house-crest {
+    border-width: 6px;
+  }
+}
+
+// Modo de movimento reduzido
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// ===================================
+// CUSTOM SCROLLBAR
+// ===================================
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $light-gray;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $medium-gray;
+  border-radius: $border-radius;
+
+  &:hover {
+    background: darken($medium-gray, 10%);
+  }
+}
+
+// ===================================
+// PRINT STYLES
+// ===================================
+@media print {
+  .quiz-container {
+    background: $white;
+    color: $black;
+  }
+
+  .sparkles,
+  .transition-loading {
+    display: none !important;
+  }
+
+  .result-card {
+    box-shadow: none;
+    border: 2px solid $black;
+  }
+}

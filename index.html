@@ -3,57 +3,150 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapéu Seletor de Hogwarts</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=MedievalSharp&display=swap"
-      rel="stylesheet"
+    <!-- SEO Meta Tags -->
+    <title>Quiz do Chapéu Seletor | Descubra sua Casa de Hogwarts</title>
+    <meta
+      name="description"
+      content="Descubra qual casa de Hogwarts é perfeita para você! Quiz interativo inspirado no Chapéu Seletor com perguntas autênticas do mundo mágico."
     />
+    <meta
+      name="keywords"
+      content="quiz hogwarts, chapéu seletor, casa hogwarts, grifinória, sonserina, corvinal, lufa-lufa, harry potter"
+    />
+    <meta name="author" content="Quiz Hogwarts Team" />
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Quiz do Chapéu Seletor - Hogwarts" />
+    <meta
+      property="og:description"
+      content="Descubra sua verdadeira casa em Hogwarts através do nosso quiz interativo!"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://quiz-hogwarts.vercel.app" />
+    <meta property="og:image" content="https://quiz-hogwarts.vercel.app/assets/og-image.png" />
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Quiz do Chapéu Seletor" />
+    <meta name="twitter:description" content="Descubra sua casa de Hogwarts!" />
+    <meta name="twitter:image" content="https://quiz-hogwarts.vercel.app/assets/twitter-card.png" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+    <!-- A linha abaixo foi comentada para evitar o erro de sintaxe do manifest,
+          caso o arquivo site.webmanifest esteja ausente ou mal formatado.
+          Se você tiver um site.webmanifest válido, pode descomentar. -->
+    <!-- <link rel="manifest" href="/assets/icons/site.webmanifest" /> -->
+    <!-- Preconnect para melhor performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <!-- Prefetch de recursos importantes -->
+    <link rel="prefetch" href="/assets/houses/gryffindor/crest.png" />
+    <link rel="prefetch" href="/assets/houses/slytherin/crest.png" />
+    <link rel="prefetch" href="/assets/houses/ravenclaw/crest.png" />
+    <link rel="prefetch" href="/assets/houses/hufflepuff/crest.png" />
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#ffc107" />
+    <meta name="msapplication-TileColor" content="#ffc107" />
+    <!-- Configurações de PWA -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Quiz Hogwarts" />
+    <!-- Loading styles inline para evitar FOUC -->
+    <style>
+      /* Loader inicial */
+      #initial-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .loader-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        animation: spin 2s linear infinite;
+      }
+      .loader-text {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #6c757d;
+        text-align: center;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      /* Hide loader quando app carrega */
+      .app-loaded #initial-loader {
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.5s ease;
+      }
+    </style>
   </head>
   <body>
-    <div class="background-overlay"></div>
-    <div class="container">
-      <div class="quiz-container">
-        <h1>🧙‍♂️​ Chapéu Seletor 🧙‍♀️</h1>
-        <div class="poem">
-          <p>"Em Hogwarts, onde seus caminhos irão se cruzar,</p>
-          <p>Em quatro casas, vocês irão se dividir.</p>
-          <p>Grifinória, de nobres corações,</p>
-          <p>Corvinal, de inteligência sem par,</p>
-          <p>Sonserina, de astúcia e ambição,</p>
-          <p>E Lufa-Lufa, de lealdade e valor."</p>
-          <p>"Ainda que haja dúvidas em sua mente,</p>
-          <p>O Chapéu Seletor, com sua sabedoria,</p>
-          <p>Pode ver o que você esconde,</p>
-          <p>E onde você deve estar."</p>
-        </div>
-
-        <div id="quiz" class="quiz-questions"></div>
-
-        <div class="buttons">
-          <button id="select-btn" class="glow-on-hover" type="button">SELECIONAR</button>
-          <button id="return-btn" class="glow-on-hover" type="button">RETORNAR</button>
-        </div>
-
-        <div id="result-container" class="result-container hidden">
-          <div id="result-card" class="result-card">
-            <div class="house-banner">
-              <img id="house-image" src="" alt="Imagem da Casa" class="house-img" />
-              <h2 id="house-title"></h2>
-            </div>
-            <div class="house-content">
-              <p id="house-description"></p>
-              <div class="house-crest">
-                <img id="house-crest-img" src="" alt="Brasão da Casa" class="crest-img" />
-              </div>
-            </div>
-          </div>
-          <div id="quiz-summary" class="quiz-summary"></div>
-        </div>
+    <!-- Loader inicial -->
+    <div id="initial-loader">
+      <div class="loader-icon">🏰</div>
+      <div class="loader-text">
+        Carregando o Chapéu Seletor...
+        <small>Preparando a magia...</small>
       </div>
     </div>
-
-    <script src="script.js"></script>
+    <!-- Root da aplicação React -->
+    <div id="root"></div>
+    <!-- Script principal -->
+    <script type="module" src="/main.jsx"></script>
+    <!-- Script para remover loader -->
+    <script>
+      // Remove o loader quando a página carrega
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          document.body.classList.add('app-loaded');
+          setTimeout(function () {
+            const loader = document.getElementById('initial-loader');
+            if (loader) {
+              loader.remove();
+            }
+          }, 500);
+        }, 1000); // Aguarda 1 segundo para mostrar o loader
+      });
+      // Analytics básico (opcional)
+      if (typeof gtag !== 'undefined') {
+        gtag('config', 'GA_TRACKING_ID', {
+          page_title: 'Quiz do Chapéu Seletor',
+          page_location: window.location.href
+        });
+      }
+      // O bloco do Service Worker foi comentado para evitar o erro de MIME type,
+      // caso o arquivo sw.js esteja ausente ou não seja um script JavaScript válido.
+      // Se você pretende ter um Service Worker, precisará criar o arquivo public/sw.js
+      // com o código JavaScript apropriado e então poderá descomentar este bloco.
+      /*
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker
+            .register('/sw.js')
+            .then(function (registration) {
+              console.log('SW registrado com sucesso: ', registration.scope);
+            })
+            .catch(function (registrationError) {
+              console.log('Falha no registro do SW: ', registrationError);
+            });
+        });
+      }
+      */
+    </script>
   </body>
 </html>
