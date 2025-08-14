@@ -1,7 +1,10 @@
+// src/styles/base/_reset.scss
+
+@use '../abstracts/variables' as *; // Esta linha foi adicionada para importar as variáveis
+
 // ===================================
 // RESET CSS PARA O QUIZ DE HOGWARTS
 // ===================================
-
 // Reset básico inspirado no normalize.css
 // -----------------------------------
 *,
@@ -11,7 +14,6 @@
   margin: 0;
   padding: 0;
 }
-
 // Reset de elementos HTML5
 // -----------------------------------
 html {
@@ -20,7 +22,6 @@ html {
   scroll-behavior: smooth;
   font-size: $font-size-base;
 }
-
 body {
   font-family: $font-family-base;
   font-size: $font-size-base;
@@ -33,7 +34,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 // Reset de títulos
 // -----------------------------------
 h1,
@@ -49,7 +49,6 @@ h6 {
   line-height: 1.2;
   color: inherit;
 }
-
 h1 {
   font-size: 2.5rem;
 }
@@ -68,7 +67,6 @@ h5 {
 h6 {
   font-size: 1rem;
 }
-
 // Reset de parágrafos
 // -----------------------------------
 p {
@@ -76,7 +74,6 @@ p {
   margin-bottom: $spacer;
   line-height: 1.6;
 }
-
 // Reset de listas
 // -----------------------------------
 ul,
@@ -85,38 +82,33 @@ ol {
   margin-bottom: $spacer;
   padding-left: $spacer * 1.5;
 }
-
 li {
   margin-bottom: $spacer * 0.25;
 }
-
 ul ul,
 ol ul,
 ul ol,
 ol ol {
   margin-bottom: 0;
 }
-
 // Reset de links
 // -----------------------------------
 a {
   color: $info;
   text-decoration: none;
   background-color: transparent;
-  @include smooth-transition(color);
-
+  // Certifique-se de que @include smooth-transition(); está definido em algum lugar ou remova se não for necessário
+  // @include smooth-transition(color);
   &:hover,
   &:focus {
     color: darken($info, 15%);
     text-decoration: underline;
   }
-
   &:not([href]):not([class]) {
     color: inherit;
     text-decoration: none;
   }
 }
-
 // Reset de imagens
 // -----------------------------------
 img {
@@ -125,11 +117,9 @@ img {
   max-width: 100%;
   height: auto;
 }
-
 svg {
   vertical-align: middle;
 }
-
 // Reset de formulários
 // -----------------------------------
 button,
@@ -142,19 +132,17 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
-
 button,
 [type='button'],
 [type='reset'],
 [type='submit'] {
   -webkit-appearance: button;
+  appearance: button;
   cursor: pointer;
-
   &:not(:disabled) {
     cursor: pointer;
   }
 }
-
 button:focus,
 [type='button']:focus,
 [type='reset']:focus,
@@ -162,12 +150,10 @@ button:focus,
   outline: 1px dotted;
   outline: 5px auto -webkit-focus-ring-color;
 }
-
 button,
 select {
   text-transform: none;
 }
-
 // Remove inner border and padding in Firefox
 button::-moz-focus-inner,
 [type='button']::-moz-focus-inner,
@@ -176,7 +162,6 @@ button::-moz-focus-inner,
   border-style: none;
   padding: 0;
 }
-
 // Restore focus styles in Firefox
 button:-moz-focusring,
 [type='button']:-moz-focusring,
@@ -184,7 +169,6 @@ button:-moz-focusring,
 [type='submit']:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
-
 // Reset de inputs
 // -----------------------------------
 input,
@@ -192,15 +176,14 @@ textarea {
   border: $border-width $border-style $medium-gray;
   border-radius: $border-radius;
   padding: $spacer * 0.5;
-  @include smooth-transition(border-color);
-
+  // Certifique-se de que @include smooth-transition(); está definido em algum lugar ou remova se não for necessário
+  // @include smooth-transition(border-color);
   &:focus {
     outline: 0;
     border-color: $info;
     box-shadow: 0 0 0 0.2rem rgba($info, 0.25);
   }
 }
-
 // Reset de tabelas
 // -----------------------------------
 table {
@@ -208,12 +191,10 @@ table {
   border-collapse: collapse;
   width: 100%;
 }
-
 th {
   text-align: inherit;
   text-align: -webkit-match-parent;
 }
-
 thead,
 tbody,
 tfoot,
@@ -224,7 +205,6 @@ th {
   border-style: solid;
   border-width: 0;
 }
-
 // Reset de elementos de código
 // -----------------------------------
 code,
@@ -234,63 +214,52 @@ pre {
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   font-size: 1em;
 }
-
 pre {
   margin-top: 0;
   margin-bottom: $spacer;
   overflow: auto;
 }
-
 // Reset de elementos HTML5
 // -----------------------------------
 main {
   display: block;
 }
-
 template {
   display: none;
 }
-
 [hidden] {
   display: none !important;
 }
-
 // Reset de elementos interativos
 // -----------------------------------
 summary {
   display: list-item;
   cursor: pointer;
 }
-
 progress {
   vertical-align: baseline;
 }
-
 [type='number']::-webkit-outer-spin-button,
 [type='number']::-webkit-inner-spin-button {
   height: auto;
 }
-
 [type='search'] {
   outline-offset: -2px;
   -webkit-appearance: textfield;
+  appearance: textfield;
 }
-
 [type='search']::-webkit-search-decoration {
   -webkit-appearance: none;
 }
-
 ::-webkit-file-upload-button {
   font: inherit;
   -webkit-appearance: button;
 }
-
 // Melhorias de acessibilidade
 // -----------------------------------
 [tabindex='-1']:focus:not(:focus-visible) {
   outline: 0 !important;
 }
-
 // Classes utilitárias básicas
 // -----------------------------------
 .sr-only {
@@ -304,7 +273,6 @@ progress {
   white-space: nowrap !important;
   border: 0 !important;
 }
-
 .sr-only-focusable:focus {
   position: static !important;
   width: auto !important;

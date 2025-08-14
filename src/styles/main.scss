@@ -1,34 +1,23 @@
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+@use 'base/reset';
+@use 'components/question';
+@use 'components/resultcard';
+
 // ===================================
 // ARQUIVO PRINCIPAL DE ESTILOS - QUIZ HOGWARTS
 // ===================================
 
-// Importação das fontes do Google Fonts
+// Importação das fontes do Google Fonts e Font Awesome
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Cinzel:wght@400;500;600;700&display=swap');
-
-// Font Awesome para ícones
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
-
-// Importações dos abstracts
-@import 'abstracts/variables';
-@import 'abstracts/mixins';
-
-// Importações da base
-@import 'base/reset';
-
-// Importações dos componentes
-@import 'components/question';
-@import 'components/resultcard';
 
 // ===================================
 // ESTILOS GLOBAIS
 // ===================================
-
-// Container principal da aplicação
-// -----------------------------------
 #root {
   min-height: 100vh;
   background: linear-gradient(135deg, lighten($light-gray, 2%), darken($light-gray, 3%));
-
   // Pattern de fundo sutil
   &::before {
     content: '';
@@ -49,7 +38,6 @@
 .quiz-container {
   min-height: 100vh;
   padding: $spacer * 2 0;
-
   @media (max-width: map-get($grid-breakpoints, md)) {
     padding: $spacer 0;
   }
@@ -59,7 +47,6 @@
 // -----------------------------------
 .quiz-header {
   margin-bottom: $spacer * 3;
-
   .quiz-main-title {
     font-family: $font-family-magical;
     font-size: clamp(2rem, 6vw, 3.5rem);
@@ -67,12 +54,10 @@
     @include magical-text(3rem);
     text-shadow: 2px 2px 4px rgba($black, 0.3);
     margin-bottom: $spacer;
-
     @media (max-width: map-get($grid-breakpoints, sm)) {
       font-size: 2rem;
     }
   }
-
   .quiz-subtitle {
     font-size: $font-size-lg;
     font-weight: $font-weight-medium;
@@ -91,45 +76,37 @@
 .about-container {
   min-height: 100vh;
   padding: $spacer * 2 0;
-
   .about-header {
     margin-bottom: $spacer * 4;
-
     .display-4 {
       font-family: $font-family-magical;
       @include magical-text(2.5rem);
       text-shadow: 2px 2px 4px rgba($black, 0.3);
     }
-
     .lead {
       font-size: $font-size-lg;
       font-weight: $font-weight-medium;
     }
   }
-
   .about-section {
     .card {
       @include responsive-card($spacer * 2);
       border: none;
       box-shadow: $box-shadow-lg;
       @include smooth-transition();
-
       &:hover {
         transform: translateY(-5px);
         box-shadow: 0 1.5rem 4rem rgba($black, 0.15);
       }
-
       .card-title {
         font-family: $font-family-heading;
         font-weight: $font-weight-semibold;
         color: $dark-gray;
         margin-bottom: $spacer;
-
         i {
           margin-right: $spacer * 0.5;
         }
       }
-
       .card-text {
         line-height: 1.7;
         color: lighten($dark-gray, 10%);
@@ -144,49 +121,38 @@
   height: 100%;
   @include smooth-transition();
   border: none !important;
-
   &:hover {
     transform: translateY(-8px);
     box-shadow: $box-shadow-lg;
   }
-
   .card-body {
     padding: $spacer * 1.5;
   }
-
   .card-title {
     font-family: $font-family-heading;
     font-weight: $font-weight-semibold;
     margin-bottom: $spacer;
   }
-
   &.gryffindor-card {
     border-left: 4px solid $gryffindor-primary !important;
-
     .card-title {
       color: $gryffindor-primary;
     }
   }
-
   &.slytherin-card {
     border-left: 4px solid $slytherin-primary !important;
-
     .card-title {
       color: $slytherin-primary;
     }
   }
-
   &.ravenclaw-card {
     border-left: 4px solid $ravenclaw-primary !important;
-
     .card-title {
       color: $ravenclaw-primary;
     }
   }
-
   &.hufflepuff-card {
     border-left: 4px solid $hufflepuff-primary !important;
-
     .card-title {
       color: $hufflepuff-primary;
     }
@@ -201,13 +167,11 @@
     border: 2px solid $warning;
     background: linear-gradient(135deg, rgba($warning, 0.1), rgba($warning, 0.05));
     border-radius: $border-radius-xl;
-
     .alert-heading {
       font-family: $font-family-heading;
       font-weight: $font-weight-semibold;
       color: darken($warning, 20%);
     }
-
     em {
       font-style: italic;
       color: $medium-gray;
@@ -281,7 +245,6 @@
     transform: translateY(0);
   }
 }
-
 @keyframes fadeInScale {
   from {
     opacity: 0;
@@ -292,7 +255,6 @@
     transform: scale(1);
   }
 }
-
 @keyframes magicalSparkle {
   0%,
   100% {
@@ -304,7 +266,6 @@
     transform: scale(1);
   }
 }
-
 @keyframes gentleFloat {
   0%,
   100% {
@@ -320,11 +281,9 @@
 .fade-in-up {
   animation: fadeInUp 0.6s ease-out;
 }
-
 .fade-in-scale {
   animation: fadeInScale 0.5s ease-out;
 }
-
 .gentle-float {
   animation: gentleFloat 3s ease-in-out infinite;
 }
@@ -342,11 +301,9 @@
     text-shadow: none;
     color: $black;
   }
-
   .option-btn {
     border-width: 3px;
   }
-
   .house-crest {
     border-width: 6px;
   }
@@ -369,15 +326,12 @@
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: $light-gray;
 }
-
 ::-webkit-scrollbar-thumb {
   background: $medium-gray;
   border-radius: $border-radius;
-
   &:hover {
     background: darken($medium-gray, 10%);
   }
@@ -391,12 +345,10 @@
     background: $white;
     color: $black;
   }
-
   .sparkles,
   .transition-loading {
     display: none !important;
   }
-
   .result-card {
     box-shadow: none;
     border: 2px solid $black;

@@ -1,0 +1,163 @@
+// src/styles/abstracts/_mixins.scss
+
+@use 'variables' as *; // Esta linha importa as variáveis
+
+// ===================================
+// MIXINS DO QUIZ DE HOGWARTS
+// ===================================
+
+// Mixin para transições suaves
+// -----------------------------------
+@mixin smooth-transition($property: all, $duration: 0.3s, $timing-function: ease-in-out) {
+  transition: $property $duration $timing-function;
+}
+
+// Mixin para texto mágico
+// -----------------------------------
+@mixin magical-text($size: 1rem, $color: $dark-gray) {
+  font-size: $size;
+  color: $color;
+  // Adicione aqui qualquer outro estilo "mágico" que você queira
+  // Por exemplo: text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+// Mixin para card responsivo (Adicionado para resolver o erro)
+// -----------------------------------
+@mixin responsive-card($padding: $spacer) {
+  padding: $padding;
+  background-color: $white; // Exemplo de uso de variável
+  border-radius: $border-radius; // Exemplo de uso de variável
+  box-shadow: $box-shadow; // Exemplo de uso de variável
+  margin-bottom: $spacer;
+
+  // Você pode adicionar mais estilos responsivos aqui, como:
+  @media (max-width: map-get($grid-breakpoints, sm)) {
+    padding: $padding * 0.75; // Reduz o padding em telas menores
+  }
+}
+
+// Mixin para cores das casas
+// -----------------------------------
+@mixin house-colors($house) {
+  @if $house == 'gryffindor' {
+    --house-primary: #{$gryffindor-primary};
+    --house-secondary: #{$gryffindor-secondary};
+    --house-gradient: #{$gryffindor-gradient};
+  } @else if $house == 'slytherin' {
+    --house-primary: #{$slytherin-primary};
+    --house-secondary: #{$slytherin-secondary};
+    --house-gradient: #{$slytherin-gradient};
+  } @else if $house == 'ravenclaw' {
+    --house-primary: #{$ravenclaw-primary};
+    --house-secondary: #{$ravenclaw-secondary};
+    --house-gradient: #{$ravenclaw-gradient};
+  } @else if $house == 'hufflepuff' {
+    --house-primary: #{$hufflepuff-primary};
+    --house-secondary: #{$hufflepuff-secondary};
+    --house-gradient: #{$hufflepuff-gradient};
+  }
+}
+
+// Mixin para texto das casas
+// -----------------------------------
+@mixin house-text($house) {
+  @if $house == 'gryffindor' {
+    color: $gryffindor-primary;
+  } @else if $house == 'slytherin' {
+    color: $slytherin-primary;
+  } @else if $house == 'ravenclaw' {
+    color: $ravenclaw-primary;
+  } @else if $house == 'hufflepuff' {
+    color: $hufflepuff-primary;
+  }
+}
+
+// Mixin para background das casas
+// -----------------------------------
+@mixin house-background($house, $opacity: 1) {
+  @if $house == 'gryffindor' {
+    background: rgba($gryffindor-primary, $opacity);
+  } @else if $house == 'slytherin' {
+    background: rgba($slytherin-primary, $opacity);
+  } @else if $house == 'ravenclaw' {
+    background: rgba($ravenclaw-primary, $opacity);
+  } @else if $house == 'hufflepuff' {
+    background: rgba($hufflepuff-primary, $opacity);
+  }
+}
+
+// Mixin para gradiente das casas
+// -----------------------------------
+@mixin house-gradient($house) {
+  @if $house == 'gryffindor' {
+    // gradiente e ajuste de hover
+    background: linear-gradient(135deg, $gryffindor-primary, lighten($gryffindor-primary, 10%));
+    @include smooth-transition(); // Agora pode ser usado
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $box-shadow;
+    }
+  }
+}
+
+// Botão de reiniciar
+// -----------------------------------
+.restart-btn {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  padding: $spacer * 0.75 $spacer * 2;
+  border-radius: $border-radius-lg;
+  border: 2px solid $info;
+  @include smooth-transition(); // Agora pode ser usado
+  &:hover {
+    background: $info;
+    border-color: $info;
+    color: $white;
+    transform: translateY(-2px);
+    box-shadow: $box-shadow-lg;
+  }
+  &:active {
+    transform: translateY(0);
+  }
+  i {
+    @include smooth-transition(transform); // Agora pode ser usado
+  }
+  &:hover i {
+    transform: rotate(180deg);
+  }
+}
+
+// Animações específicas do resultado
+// -----------------------------------
+@keyframes resultFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotateY(-90deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
+  }
+}
+
+// Responsividade
+// -----------------------------------
+@media (max-width: map-get($grid-breakpoints, sm)) {
+  .result-card {
+    margin: $spacer * 0.5;
+    .card-header {
+      height: $banner-height * 0.8;
+    }
+    .house-description {
+      font-size: $font-size-base;
+    }
+    .house-info,
+    .scores-breakdown {
+      padding: $spacer;
+    }
+    .restart-btn {
+      font-size: $font-size-base;
+      padding: $spacer * 0.5 $spacer * 1.5;
+    }
+  }
+}

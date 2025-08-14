@@ -12,8 +12,8 @@ import { housesInfo } from '../data/questions.js';
  */
 const ResultCard = ({ house, scores, onRestart }) => {
   const houseInfo = housesInfo[house];
-  const crestPath = `/assets/houses/${house}/crest.png`;
-  const bannerPath = `/assets/houses/${house}/banner.png`;
+  const crestPath = `/assets/houses/${house}/crest.jpg`; // Ajustado para .jpg
+  const bannerPath = `/assets/houses/${house}/banner.png`; // Mantido .png
 
   // Variantes de animação para o Framer Motion
   const cardVariants = {
@@ -116,7 +116,7 @@ const ResultCard = ({ house, scores, onRestart }) => {
               alt={`Brasão da ${houseInfo.name}`}
               className="house-crest"
               onError={e => {
-                e.target.src = '/assets/icons/default-crest.png';
+                e.target.src = '/assets/icons/default-crest.png'; // Opção caso a imagem falhe
               }}
             />
           </motion.div>
