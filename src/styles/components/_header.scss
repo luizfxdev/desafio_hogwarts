@@ -1,0 +1,250 @@
+// src/styles/components/_header.scss
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ===================================
+// HEADER PRINCIPAL
+// ===================================
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: $z-index-fixed;
+  background: linear-gradient(135deg, rgba(10, 10, 31, 0.95), rgba(42, 42, 74, 0.95));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+
+  .navbar {
+    padding: 1rem 0;
+    min-height: 70px;
+
+    .container-fluid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+
+      @media (max-width: map-get($grid-breakpoints, sm)) {
+        padding: 0 1rem;
+      }
+    }
+  }
+
+  // ===================================
+  // BRAND/LOGO
+  // ===================================
+  .navbar-brand {
+    font-family: $font-family-heading;
+    font-size: 1.5rem;
+    font-weight: $font-weight-bold;
+    color: $text-accent !important;
+    text-decoration: none;
+    transition: $transition-base;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+
+    .brand-text {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      strong {
+        background: linear-gradient(135deg, $text-accent, lighten($text-accent, 15%));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+
+    &:hover {
+      color: lighten($text-accent, 10%) !important;
+      transform: $hover-transform;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+
+    @media (max-width: map-get($grid-breakpoints, md)) {
+      font-size: 1.3rem;
+    }
+  }
+
+  // ===================================
+  // BOTÃO TOGGLE MOBILE
+  // ===================================
+  .navbar-toggler {
+    border: none !important;
+    padding: 0.25rem 0.5rem;
+    font-size: 1.1rem;
+    background: transparent;
+    color: $text-primary;
+    transition: $transition-base;
+
+    &:focus {
+      box-shadow: none;
+      outline: 2px solid $text-accent;
+      outline-offset: 2px;
+    }
+
+    .navbar-toggler-icon {
+      background-image: none;
+      width: 1.5em;
+      height: 1.5em;
+      position: relative;
+
+      &::before {
+        content: '\f0c9'; // Font Awesome hamburger icon
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        color: $text-primary;
+        font-size: 1.2rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &:hover {
+      color: $text-accent;
+      transform: scale(1.1);
+
+      .navbar-toggler-icon::before {
+        color: $text-accent;
+      }
+    }
+  }
+
+  // ===================================
+  // NAVEGAÇÃO
+  // ===================================
+  .navbar-nav {
+    gap: 0.5rem;
+
+    .nav-item {
+      .nav-link {
+        color: $text-primary !important;
+        font-weight: $font-weight-medium;
+        padding: 0.5rem 1rem;
+        border-radius: $border-radius;
+        transition: $transition-base;
+        text-decoration: none;
+        background: transparent;
+        border: 1px solid transparent;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+
+        i {
+          font-size: 0.9rem;
+          opacity: 0.8;
+        }
+
+        &:hover {
+          color: $text-accent !important;
+          background: rgba(255, 215, 0, 0.1);
+          border-color: rgba(255, 215, 0, 0.2);
+          transform: $hover-transform;
+
+          i {
+            opacity: 1;
+            color: $text-accent;
+          }
+        }
+
+        &:focus {
+          outline: 2px solid $text-accent;
+          outline-offset: 2px;
+        }
+
+        &.active {
+          color: $black !important;
+          background: linear-gradient(135deg, $text-accent, lighten($text-accent, 10%));
+          border-color: $text-accent;
+          font-weight: $font-weight-semibold;
+          box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+
+          i {
+            color: $black;
+            opacity: 1;
+          }
+
+          &:hover {
+            background: linear-gradient(135deg, lighten($text-accent, 5%), lighten($text-accent, 15%));
+            transform: $hover-transform;
+          }
+        }
+      }
+    }
+
+    @media (max-width: map-get($grid-breakpoints, lg)) {
+      .nav-item .nav-link {
+        padding: 0.6rem 1rem;
+        margin: 0.2rem 0;
+        border-radius: $border-radius;
+      }
+    }
+  }
+
+  // ===================================
+  // COLLAPSE MOBILE
+  // ===================================
+  .navbar-collapse {
+    @media (max-width: map-get($grid-breakpoints, lg)) {
+      background: rgba(42, 42, 74, 0.95);
+      border-radius: $border-radius;
+      padding: 1rem;
+      margin-top: 1rem;
+      border: 1px solid rgba(255, 215, 0, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  // ===================================
+  // EFEITOS ESPECIAIS
+  // ===================================
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $text-accent 50%, transparent);
+    opacity: 0.3;
+  }
+
+  // Animação de entrada
+  &.header-enter {
+    transform: translateY(-100%);
+    animation: slideDown 0.5s ease-out forwards;
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  // Scroll effect
+  &.scrolled {
+    background: linear-gradient(135deg, rgba(10, 10, 31, 0.98), rgba(42, 42, 74, 0.98));
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+
+    .navbar-brand {
+      transform: scale(0.95);
+    }
+  }
+}
+
+// ===================================
+// AJUSTE DO BODY PARA HEADER FIXO
+// ===================================
+body.has-header {
+  padding-top: 70px;
+}

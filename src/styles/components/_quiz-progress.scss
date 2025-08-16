@@ -1,0 +1,118 @@
+// src/styles/components/_quiz-progress.scss
+// PROGRESSO EXTERNO CENTRALIZADO - SOBRESCREVENDO TODAS AS OUTRAS REGRAS
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// FORÇA A CENTRALIZAÇÃO DO CONTADOR
+.quiz-external-progress {
+  position: fixed !important;
+  top: 2rem !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
+  max-width: 300px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 1000 !important;
+
+  .progress-container {
+    background: rgba(0, 0, 0, 0.8) !important;
+    border-radius: 8px !important;
+    padding: 0.8rem 1.2rem !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+
+    .progress-bar-bg {
+      display: none !important; // Remove a barra visual, mantém apenas o texto
+    }
+  }
+
+  .progress-text {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+  }
+}
+
+// SOBRESCREVER COMPLETAMENTE AS REGRAS DO _questions.scss
+.quiz-progress-wrapper {
+  position: fixed !important;
+  top: 2rem !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 1000 !important;
+
+  .quiz-progress-counter {
+    background: rgba(0, 0, 0, 0.8) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    padding: 0.8rem 1.5rem !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .quiz-external-progress {
+    top: 1.5rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    max-width: 250px !important;
+
+    .progress-container {
+      padding: 0.7rem 1rem !important;
+    }
+
+    .progress-text {
+      font-size: 0.85rem !important;
+    }
+  }
+
+  .quiz-progress-wrapper {
+    top: 1.5rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+
+    .quiz-progress-counter {
+      padding: 0.7rem 1.2rem !important;
+      font-size: 0.85rem !important;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .quiz-external-progress {
+    top: 1rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    max-width: 200px !important;
+
+    .progress-container {
+      padding: 0.6rem 0.8rem !important;
+    }
+
+    .progress-text {
+      font-size: 0.8rem !important;
+    }
+  }
+
+  .quiz-progress-wrapper {
+    top: 1rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+
+    .quiz-progress-counter {
+      padding: 0.6rem 1rem !important;
+      font-size: 0.8rem !important;
+    }
+  }
+}

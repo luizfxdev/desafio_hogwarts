@@ -1,35 +1,113 @@
 // src/styles/main.scss
+// VERSÃO FINAL CORRIGIDA BASEADA EXATAMENTE NO HTML DE REFERÊNCIA
+// ===================================
+// IMPORTAÇÕES @USE (DEVEM VIR PRIMEIRO)
+// ===================================
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
 
 // ===================================
-// IMPORTAÇÕES DE ABSTRATOS E BASES
+// IMPORTAÇÕES DE FONTES
 // ===================================
-@use 'abstracts/variables' as *; // Variáveis devem ser importadas primeiro
-@use 'abstracts/mixins' as *; // Mixins devem ser importados depois das variáveis
-
-@use 'base/reset';
-@use 'base/typography'; // Arquivo de tipografia importado
-
-// ===================================
-// IMPORTAÇÕES DE COMPONENTES E PÁGINAS
-// ===================================
-@use 'components/question';
-@use 'components/resultcard';
-// ... outros componentes como _buttons.scss, _layout.scss, etc.
-
-// ===================================
-// ARQUIVO PRINCIPAL DE ESTILOS - QUIZ HOGWARTS
-// ===================================
-// Importação das fontes do Google Fonts e Font Awesome
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Cinzel:wght@400;500;600;700&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
 // ===================================
-// ESTILOS GLOBAIS
+// IMPORTAR ESTILOS DOS COMPONENTES
 // ===================================
+@import 'base/reset';
+@import 'base/typography';
+@import 'components/magiccard';
+@import 'components/question';
+@import 'components/houses';
+@import 'components/header';
+@import 'components/footer';
+
+// ===================================
+// PROPRIEDADE CSS CUSTOMIZADA PARA ANIMAÇÃO
+// ===================================
+@property --rotate {
+  syntax: '<angle>';
+  initial-value: 132deg;
+  inherits: false;
+}
+
+// ===================================
+// KEYFRAMES (EXATOS DO HTML)
+// ===================================
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
+
+@keyframes magicalFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-10px) rotate(-2deg);
+  }
+}
+
+@keyframes progressShine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+// ===================================
+// VARIÁVEIS GLOBAIS (EXATAS DO HTML)
+// ===================================
+:root {
+  --card-max-width: min(90vw, 800px);
+  --card-min-height: min(70vh, 600px);
+  --border-width: 3px;
+  --border-radius: 12px;
+  --bg-primary: #0a0a1f;
+  --bg-card: #2a2a4a;
+  --text-primary: #e0e0e0;
+  --text-accent: #ffd700;
+}
+
+// ===================================
+// RESET E BASE (IGUAL AO HTML)
+// ===================================
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
 #root {
   min-height: 100vh;
-  background: linear-gradient(135deg, lighten($light-gray, 2%), darken($light-gray, 3%));
-  // Pattern de fundo sutil
+  background: var(--bg-primary) !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  // Pattern de fundo sutil (IGUAL AO HTML)
   &::before {
     content: '';
     position: fixed;
@@ -37,332 +115,618 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(circle at 25% 25%, rgba($warning, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba($info, 0.05) 0%, transparent 50%);
+    background: radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(77, 166, 255, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 70%);
     pointer-events: none;
     z-index: -1;
   }
 }
 
-// Container principal do quiz
-// -----------------------------------
-.quiz-container {
+// ===================================
+// APP PRINCIPAL
+// ===================================
+.App {
   min-height: 100vh;
-  padding: $spacer * 2 0;
-  @media (max-width: map-get($grid-breakpoints, md)) {
-    padding: $spacer 0;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+// ===================================
+// MAGIC CARD PRINCIPAL (EXATO DO HTML)
+// ===================================
+.quiz-magic-card {
+  width: var(--card-max-width);
+  min-height: var(--card-min-height);
+  max-width: 100%;
+  margin: 2rem auto;
+  padding: 0;
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background: transparent;
+
+  // Sombra e glow (IGUAL AO HTML)
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 60px rgba(255, 215, 0, 0.1);
+
+  // Borda animada (IGUAL AO HTML)
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: var(--border-width);
+    background: linear-gradient(var(--rotate), #ffd700, #ffed4e 43%, #ff6b35);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    animation: spin 2.5s linear infinite;
+    z-index: -1;
+  }
+
+  // Fundo interno (IGUAL AO HTML)
+  &::after {
+    content: '';
+    position: absolute;
+    inset: var(--border-width);
+    background: var(--bg-card);
+    border-radius: calc(var(--border-radius) - var(--border-width));
+    z-index: -1;
+  }
+
+  // Conteúdo interno
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 100px rgba(255, 215, 0, 0.2);
+
+    &::before {
+      animation-duration: 1.8s;
+    }
   }
 }
 
-// Header principal do quiz
-// -----------------------------------
+// ===================================
+// CONTAINER DO CONTEÚDO (IGUAL AO HTML)
+// ===================================
+.quiz-content {
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: inherit;
+  box-sizing: border-box;
+}
+
+// ===================================
+// HEADER DO QUIZ (IGUAL AO HTML)
+// ===================================
 .quiz-header {
-  margin-bottom: $spacer * 3;
+  text-align: center;
+  margin-bottom: 2rem;
+
   .quiz-main-title {
-    font-family: $font-family-magical;
     font-size: clamp(2rem, 6vw, 3.5rem);
-    font-weight: $font-weight-bold;
-    @include magical-text(3rem);
-    text-shadow: 2px 2px 4px rgba($black, 0.3);
-    margin-bottom: $spacer;
-    @media (max-width: map-get($grid-breakpoints, sm)) {
-      font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-accent) !important;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    margin-bottom: 1rem;
+    font-family: 'Cinzel', serif;
+
+    // Layout flexível para o ícone e texto (IGUAL AO HTML)
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    white-space: nowrap;
+
+    .castle-icon {
+      font-size: 1.2em;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
     }
   }
+
   .quiz-subtitle {
-    font-size: $font-size-lg;
-    font-weight: $font-weight-medium;
-    color: $medium-gray;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8) !important;
     max-width: 600px;
     margin: 0 auto;
+    line-height: 1.5;
   }
 }
 
 // ===================================
-// ESTILOS ESPECÍFICOS DA APLICAÇÃO
+// CONTAINER DA PERGUNTA (CORRIGIDO PARA SER COMO A IMAGEM)
 // ===================================
-// Container da página About
-// -----------------------------------
-.about-container {
-  min-height: 100vh;
-  padding: $spacer * 2 0;
-  .about-header {
-    margin-bottom: $spacer * 4;
-    .display-4 {
-      font-family: $font-family-magical;
-      @include magical-text(2.5rem);
-      text-shadow: 2px 2px 4px rgba($black, 0.3);
-    }
-    .lead {
-      font-size: $font-size-lg;
-      font-weight: $font-weight-medium;
+.question-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  width: 100%;
+
+  .question-text,
+  .question-title {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700;
+    color: #e0e0e0 !important;
+    margin-bottom: 2rem;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    max-width: 90%;
+
+    h1,
+    h2,
+    h3 {
+      color: inherit !important;
+      margin: 0;
+      font-weight: inherit;
     }
   }
-  .about-section {
-    .card {
-      @include responsive-card($spacer * 2);
-      border: none;
-      box-shadow: $box-shadow-lg;
-      @include smooth-transition();
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 1.5rem 4rem rgba($black, 0.15);
+
+  .options-grid,
+  .options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 650px;
+    margin: 2rem 0;
+
+    .option-button,
+    .option-btn {
+      // Fundo escuro semi-transparente como na referência
+      background: rgba(255, 255, 255, 0.08) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      color: #e0e0e0 !important;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      min-height: 55px;
+      width: 100%;
+
+      // Estrutura flexível para letra + texto
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .option-letter {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.5rem;
+        height: 1.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #e0e0e0;
+        flex-shrink: 0;
       }
-      .card-title {
-        font-family: $font-family-heading;
-        font-weight: $font-weight-semibold;
-        color: $dark-gray;
-        margin-bottom: $spacer;
-        i {
-          margin-right: $spacer * 0.5;
+
+      .option-text {
+        flex: 1;
+        line-height: 1.4;
+        text-align: left;
+        color: inherit;
+      }
+
+      // Estados de interação
+      &:hover {
+        background-color: rgba(255, 215, 0, 0.1) !important;
+        border-color: rgba(255, 215, 0, 0.3) !important;
+        color: #ffffff !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+        .option-letter {
+          background: rgba(255, 215, 0, 0.2);
+          border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        .option-text {
+          color: inherit;
         }
       }
-      .card-text {
-        line-height: 1.7;
-        color: lighten($dark-gray, 10%);
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      // Estado selecionado
+      &.selected {
+        background-color: rgba(255, 215, 0, 0.15) !important;
+        border-color: rgba(255, 215, 0, 0.5) !important;
+        color: #ffffff !important;
+        pointer-events: none;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+
+        .option-letter {
+          background: rgba(255, 215, 0, 0.3);
+          color: #000000;
+          border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        .option-text {
+          color: inherit;
+        }
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba(255, 215, 0, 0.6);
+        outline-offset: 2px;
       }
     }
   }
 }
 
-// Cards das casas na página About
-// -----------------------------------
-.house-card {
+// ===================================
+// BARRA DE PROGRESSO (IGUAL AO HTML)
+// ===================================
+.quiz-progress {
+  margin-top: auto;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  .progress {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #ffd700, #ffed4e, #ff6b35);
+      border-radius: inherit;
+      transition: width 0.6s ease-in-out;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        animation: progressShine 2s ease-in-out infinite;
+      }
+    }
+  }
+
+  .progress-text,
+  small {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 0.9rem;
+    text-align: center;
+    display: block;
+  }
+}
+
+// ===================================
+// CONTAINER PRINCIPAL DO QUIZ
+// ===================================
+.quiz-container {
+  min-height: calc(100vh - 140px); // Descontar header e footer
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+  background: transparent;
+}
+
+// ===================================
+// LOADING INDICATOR
+// ===================================
+.transition-loading {
+  text-align: center;
+  margin-top: 2rem;
+
+  .spinner-border {
+    border: 3px solid transparent;
+    border-top: 3px solid var(--text-accent);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+  }
+}
+
+// ===================================
+// LOADER INICIAL (IGUAL AO HTML)
+// ===================================
+#initial-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
-  @include smooth-transition();
-  border: none !important;
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: $box-shadow-lg;
-  }
-  .card-body {
-    padding: $spacer * 1.5;
-  }
-  .card-title {
-    font-family: $font-family-heading;
-    font-weight: $font-weight-semibold;
-    margin-bottom: $spacer;
-  }
-  &.gryffindor-card {
-    border-left: 4px solid $gryffindor-primary !important;
-    .card-title {
-      color: $gryffindor-primary;
-    }
-  }
-  &.slytherin-card {
-    border-left: 4px solid $slytherin-primary !important;
-    .card-title {
-      color: $slytherin-primary;
-    }
-  }
-  &.ravenclaw-card {
-    border-left: 4px solid $ravenclaw-primary !important;
-    .card-title {
-      color: $ravenclaw-primary;
-    }
-  }
-  &.hufflepuff-card {
-    border-left: 4px solid $hufflepuff-primary !important;
-    .card-title {
-      color: $hufflepuff-primary;
-    }
-  }
-}
+  background: linear-gradient(135deg, #0a0a1f, #1a1a3f);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-family: 'Inter', sans-serif;
 
-// Call to action na página About
-// -----------------------------------
-.about-cta {
-  .alert {
-    @include responsive-card($spacer * 2);
-    border: 2px solid $warning;
-    background: linear-gradient(135deg, rgba($warning, 0.1), rgba($warning, 0.05));
-    border-radius: $border-radius-xl;
-    .alert-heading {
-      font-family: $font-family-heading;
-      font-weight: $font-weight-semibold;
-      color: darken($warning, 20%);
-    }
-    em {
+  .loader-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: magicalFloat 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+  }
+
+  .loader-text {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-accent);
+    text-align: center;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+
+    small {
+      display: block;
+      font-size: 1rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 0.5rem;
       font-style: italic;
-      color: $medium-gray;
-      font-size: $font-size-sm;
     }
   }
 }
 
-// Botão de reiniciar (Movido para cá, idealmente em um arquivo de botões)
-// -----------------------------------
-.restart-btn {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-medium;
-  padding: $spacer * 0.75 $spacer * 2;
-  border-radius: $border-radius-lg;
-  border: 2px solid $info;
-  @include smooth-transition();
+.app-loaded #initial-loader {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.8s ease;
+  pointer-events: none;
+}
+
+// ===================================
+// ELEMENTOS ESPECÍFICOS DO QUIZ
+// ===================================
+// Header com progresso
+.question-header {
+  margin-bottom: 2rem;
+  width: 100%;
+
+  .progress {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #ffd700, #ffed4e, #ff6b35);
+      border-radius: inherit;
+      transition: width 0.6s ease-in-out;
+    }
+  }
+
+  small {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    display: block;
+    text-align: center;
+  }
+}
+
+// Indicador de seleção
+.selection-indicator {
+  margin-top: 2rem;
+  text-align: center;
+
+  .alert {
+    padding: 1rem;
+    background: rgba(40, 167, 69, 0.15);
+    border: 1px solid rgba(40, 167, 69, 0.3);
+    color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+
+    i {
+      color: rgba(40, 167, 69, 1);
+    }
+  }
+}
+
+// ===================================
+// OVERRIDE BOOTSTRAP PARA GARANTIR TEMA ESCURO
+// ===================================
+.card,
+.quiz-content,
+.question-container,
+.option-button,
+.option-btn {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+}
+
+.text-muted {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+// ===================================
+// RESPONSIVIDADE (IGUAL AO HTML)
+// ===================================
+@media (max-width: 768px) {
+  .quiz-magic-card {
+    margin: 1.5rem auto;
+    width: 95vw;
+
+    .quiz-content {
+      padding: 1.5rem;
+    }
+  }
+
+  .quiz-header .quiz-main-title {
+    gap: 5px;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+
+    .castle-icon {
+      font-size: 1em;
+    }
+  }
+
+  .quiz-header .quiz-subtitle {
+    font-size: 1rem;
+  }
+
+  .question-container {
+    padding: 1.5rem 1rem;
+
+    .question-text,
+    .question-title {
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .options-grid,
+    .options-container {
+      max-width: 100%;
+      gap: 0.8rem;
+
+      .option-button,
+      .option-btn {
+        font-size: 0.95rem;
+        padding: 0.9rem 1.2rem;
+        min-height: 50px;
+
+        .option-letter {
+          min-width: 1.3rem;
+          height: 1.3rem;
+          font-size: 0.75rem;
+        }
+      }
+    }
+  }
+
+  .quiz-container {
+    padding: 1rem 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .quiz-magic-card {
+    margin: 1rem auto;
+
+    .quiz-content {
+      padding: 1rem;
+    }
+  }
+
+  .question-container {
+    padding: 1rem;
+
+    .question-text,
+    .question-title {
+      font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+      margin-bottom: 1.2rem;
+    }
+
+    .options-grid,
+    .options-container {
+      .option-button,
+      .option-btn {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+        min-height: 45px;
+
+        .option-letter {
+          min-width: 1.2rem;
+          height: 1.2rem;
+          font-size: 0.7rem;
+        }
+      }
+    }
+  }
+
+  .quiz-container {
+    padding: 0.5rem;
+  }
+}
+
+// ===================================
+// SCROLLBAR PERSONALIZADA
+// ===================================
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 215, 0, 0.6);
+  border-radius: 4px;
+
   &:hover {
-    background: $info;
-    border-color: $info;
-    color: $white;
-    transform: translateY(-2px);
-    box-shadow: $box-shadow-lg;
-  }
-  &:active {
-    transform: translateY(0);
-  }
-  i {
-    @include smooth-transition(transform);
-  }
-  &:hover i {
-    transform: rotate(180deg);
-  }
-}
-
-// Animações específicas do resultado (Movido para cá, idealmente em um arquivo de animações ou no resultcard.scss)
-// -----------------------------------
-@keyframes resultFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8) rotateY(-90deg);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) rotateY(0deg);
+    background: rgba(255, 215, 0, 0.8);
   }
 }
 
 // ===================================
-// CLASSES UTILITÁRIAS CUSTOMIZADAS
+// MODO DE MOVIMENTO REDUZIDO
 // ===================================
-// Classes de texto para as casas
-// -----------------------------------
-.text-gryffindor {
-  color: $gryffindor-primary !important;
-}
-.text-slytherin {
-  color: $slytherin-primary !important;
-}
-.text-ravenclaw {
-  color: $ravenclaw-primary !important;
-}
-.text-hufflepuff {
-  color: $hufflepuff-primary !important;
-}
-
-// Classes de background para as casas
-// -----------------------------------
-.bg-gryffindor {
-  background-color: $gryffindor-primary !important;
-  color: $white;
-}
-.bg-slytherin {
-  background-color: $slytherin-primary !important;
-  color: $white;
-}
-.bg-ravenclaw {
-  background-color: $ravenclaw-primary !important;
-  color: $white;
-}
-.bg-hufflepuff {
-  background-color: $hufflepuff-primary !important;
-  color: $dark-gray;
-}
-
-// Classes de borda para as casas
-// -----------------------------------
-.border-gryffindor {
-  border-color: $gryffindor-primary !important;
-}
-.border-slytherin {
-  border-color: $slytherin-primary !important;
-}
-.border-ravenclaw {
-  border-color: $ravenclaw-primary !important;
-}
-.border-hufflepuff {
-  border-color: $hufflepuff-primary !important;
-}
-
-// Animações globais
-// -----------------------------------
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-@keyframes magicalSparkle {
-  0%,
-  100% {
-    opacity: 0;
-    transform: scale(0);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-@keyframes gentleFloat {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-// Classes de animação
-// -----------------------------------
-.fade-in-up {
-  animation: fadeInUp 0.6s ease-out;
-}
-.fade-in-scale {
-  animation: fadeInScale 0.5s ease-out;
-}
-.gentle-float {
-  animation: gentleFloat 3s ease-in-out infinite;
-}
-
-// Melhorias de acessibilidade
-// -----------------------------------
-.focus-visible {
-  outline: 2px solid $info;
-  outline-offset: 2px;
-}
-
-// Modo de alto contraste
-@media (prefers-contrast: high) {
-  .quiz-main-title {
-    text-shadow: none;
-    color: $black;
-  }
-  .option-btn {
-    border-width: 3px;
-  }
-  .house-crest {
-    border-width: 6px;
-  }
-}
-
-// Modo de movimento reduzido
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  .quiz-magic-card::before {
+    animation: none !important;
+  }
+
+  .quiz-magic-card {
+    animation: none !important;
+  }
+
+  * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -370,36 +734,27 @@
 }
 
 // ===================================
-// CUSTOM SCROLLBAR
-// ===================================
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: $light-gray;
-}
-::-webkit-scrollbar-thumb {
-  background: $medium-gray;
-  border-radius: $border-radius;
-  &:hover {
-    background: darken($medium-gray, 10%);
-  }
-}
-
-// ===================================
-// PRINT STYLES
+// ESTILOS PARA IMPRESSÃO
 // ===================================
 @media print {
   .quiz-container {
-    background: $white;
-    color: $black;
+    background: #fff !important;
+    color: #000 !important;
   }
+
+  .quiz-magic-card {
+    background: #fff !important;
+    box-shadow: none !important;
+    border: 2px solid #000 !important;
+
+    &::before,
+    &::after {
+      display: none !important;
+    }
+  }
+
   .sparkles,
   .transition-loading {
     display: none !important;
-  }
-  .result-card {
-    box-shadow: none;
-    border: 2px solid $black;
   }
 }

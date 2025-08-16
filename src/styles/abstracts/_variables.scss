@@ -1,64 +1,90 @@
 // src/styles/abstracts/_variables.scss
+// VERSÃO CORRIGIDA BASEADA NO HTML DE REFERÊNCIA
 
 // ===================================
-// VARIÁVEIS DE CORES
+// CORES PRINCIPAIS
 // ===================================
+$bg-primary: #0a0a1f;
+$bg-card: #2a2a4a;
+$text-primary: #e0e0e0;
+$text-secondary: rgba(255, 255, 255, 0.8);
+$text-muted: rgba(255, 255, 255, 0.6);
+$text-accent: #ffd700;
 $white: #ffffff;
 $black: #000000;
-$dark-gray: #333333;
-$medium-gray: #666666;
-$light-gray: #f0f0f0;
-
-$warning: #ffc107; // Amarelo para alertas/destaques
-$info: #17a2b8; // Azul para informações/botões
-
-// Cores das Casas de Hogwarts
-$gryffindor-primary: #740001; // Vermelho escuro
-$gryffindor-secondary: #eeba30; // Dourado
-$gryffindor-gradient: linear-gradient(135deg, #740001, #a70002); // Exemplo de gradiente
-
-$slytherin-primary: #1a472a; // Verde escuro
-$slytherin-secondary: #aaaaaa; // Prata
-$slytherin-gradient: linear-gradient(135deg, #1a472a, #2a633d);
-
-$ravenclaw-primary: #0e1a40; // Azul marinho
-$ravenclaw-secondary: #946b2d; // Bronze
-$ravenclaw-gradient: linear-gradient(135deg, #0e1a40, #1b3260);
-
-$hufflepuff-primary: #ecb939; // Amarelo
-$hufflepuff-secondary: #372e29; // Preto
-$hufflepuff-gradient: linear-gradient(135deg, #ecb939, #f7d264);
 
 // ===================================
-// VARIÁVEIS DE ESPAÇAMENTO E TAMANHOS
+// CORES DAS CASAS DE HOGWARTS
 // ===================================
-$spacer: 1rem; // Base para espaçamento (16px)
+$gryffindor-primary: #740001;
+$gryffindor-secondary: #d3a625;
+$gryffindor-text: #ffffff;
 
-$border-radius: 0.25rem;
-$border-radius-lg: 0.5rem;
-$border-radius-xl: 1rem;
+$slytherin-primary: #1a472a;
+$slytherin-secondary: #aaaaaa;
+$slytherin-text: #ffffff;
 
-$border-width: 1px; // Adicionado: Largura padrão da borda
-$border-style: solid; // Adicionado: Estilo padrão da borda
+$ravenclaw-primary: #0e1a40;
+$ravenclaw-secondary: #946b2d;
+$ravenclaw-text: #ffffff;
 
-$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-$box-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
-$box-shadow-magical: 0 10px 20px rgba(0, 0, 0, 0.2); // Exemplo de sombra mágica
+$hufflepuff-primary: #ecb939;
+$hufflepuff-secondary: #372e29;
+$hufflepuff-text: #000000;
 
-$banner-height: 150px; // Altura do banner
-$crest-size: 100px; // Tamanho base do brasão
-$result-card-max-width: 900px; // Largura máxima do card de resultado
+// Mapa das casas
+$house-colors: (
+  gryffindor: (
+    primary: $gryffindor-primary,
+    secondary: $gryffindor-secondary,
+    text: $gryffindor-text,
+    gradient: linear-gradient(135deg, $gryffindor-primary, darken($gryffindor-primary, 15%))
+  ),
+  slytherin: (
+    primary: $slytherin-primary,
+    secondary: $slytherin-secondary,
+    text: $slytherin-text,
+    gradient: linear-gradient(135deg, $slytherin-primary, darken($slytherin-primary, 15%))
+  ),
+  ravenclaw: (
+    primary: $ravenclaw-primary,
+    secondary: $ravenclaw-secondary,
+    text: $ravenclaw-text,
+    gradient: linear-gradient(135deg, $ravenclaw-primary, darken($ravenclaw-primary, 15%))
+  ),
+  hufflepuff: (
+    primary: $hufflepuff-primary,
+    secondary: $hufflepuff-secondary,
+    text: $hufflepuff-text,
+    gradient: linear-gradient(135deg, $hufflepuff-primary, darken($hufflepuff-primary, 15%))
+  )
+);
 
 // ===================================
-// VARIÁVEIS DE TIPOGRAFIA
+// MAGIC CARD VARIABLES
 // ===================================
-$font-family-base: 'Inter', sans-serif;
+$magic-border-radius: 12px;
+$magic-border-width: 3px;
+$magic-card-max-width: min(90vw, 800px);
+$magic-card-min-height: min(70vh, 600px);
+
+$magic-gradient-start: #ffd700;
+$magic-gradient-middle: #ffed4e;
+$magic-gradient-end: #ff6b35;
+
+// ===================================
+// TIPOGRAFIA
+// ===================================
+$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 $font-family-heading: 'Cinzel', serif;
-$font-family-magical: 'Poppins', sans-serif; // Ou 'Fantasy', 'cursive' se tiver uma fonte específica
+$font-family-magical: 'Poppins', sans-serif;
 
-$font-size-base: 1rem;
+$font-size-xs: 0.75rem;
 $font-size-sm: 0.875rem;
+$font-size-base: 1rem;
 $font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-xxl: 1.5rem;
 
 $font-weight-light: 300;
 $font-weight-normal: 400;
@@ -67,22 +93,72 @@ $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
 // ===================================
-// VARIÁVEIS DE BREAKPOINTS (para responsividade)
+// ESPAÇAMENTO E TAMANHOS
+// ===================================
+$spacer: 1rem;
+$border-radius: 8px;
+$border-radius-lg: 12px;
+
+// Progresso
+$progress-bar-height: 8px;
+$progress-bar-border-radius: 10px;
+
+// Opções
+$option-button-gap: 0.75rem;
+
+// ===================================
+// BREAKPOINTS
 // ===================================
 $grid-breakpoints: (
   xs: 0,
   sm: 576px,
   md: 768px,
   lg: 992px,
-  xl: 1200px,
-  xxl: 1400px
+  xl: 1200px
 );
 
 // ===================================
-// OUTRAS VARIÁVEIS ESPECÍFICAS
+// ANIMAÇÕES E TRANSIÇÕES
 // ===================================
-$sparkle-colors: (
-  gold: #ffd700,
-  silver: #c0c0c0,
-  bronze: #cd7f32
-);
+$transition-base: all 0.3s ease;
+$transition-fast: all 0.15s ease;
+$transition-slow: all 0.5s ease;
+
+// Estados de transformação
+$hover-transform: translateY(-2px);
+$active-transform: translateY(0);
+$selected-transform: scale(1.02);
+
+// ===================================
+// Z-INDEX
+// ===================================
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+$z-index-debug: 9998;
+$z-index-loader: 9999;
+
+// ===================================
+// CORES AUXILIARES
+// ===================================
+$overlay-light: rgba(255, 255, 255, 0.1);
+$overlay-button: rgba(255, 255, 255, 0.08);
+$overlay-button-border: rgba(255, 255, 255, 0.2);
+$overlay-button-hover: rgba(255, 215, 0, 0.15);
+
+// Success/Error colors
+$success-color: rgba(40, 167, 69, 1);
+$success-bg: rgba(40, 167, 69, 0.15);
+$success-border: rgba(40, 167, 69, 0.3);
+
+$error-color: rgba(220, 53, 69, 1);
+$error-bg: rgba(220, 53, 69, 0.15);
+$error-border: rgba(220, 53, 69, 0.3);
+
+// Pattern de fundo
+$pattern-subtle: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.02) 0%, transparent 50%),
+  radial-gradient(circle at 70% 70%, rgba(77, 166, 255, 0.02) 0%, transparent 50%);

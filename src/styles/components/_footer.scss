@@ -1,0 +1,272 @@
+// src/styles/components/_footer.scss
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ===================================
+// FOOTER PRINCIPAL
+// ===================================
+.app-footer {
+  background: linear-gradient(135deg, rgba(10, 10, 31, 0.95), rgba(42, 42, 74, 0.95));
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  margin-top: auto;
+  position: relative;
+
+  // Linha decorativa no topo
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $text-accent 50%, transparent);
+    opacity: 0.3;
+  }
+
+  .container {
+    max-width: 1200px;
+    padding: 0 2rem;
+
+    @media (max-width: map-get($grid-breakpoints, sm)) {
+      padding: 0 1rem;
+    }
+  }
+
+  // ===================================
+  // CONTEÚDO DO FOOTER
+  // ===================================
+  .footer-content {
+    padding: 2rem 0 1.5rem;
+    text-align: center;
+    color: $text-secondary;
+
+    p {
+      margin-bottom: 0.5rem;
+      font-size: $font-size-sm;
+      line-height: 1.5;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .text-muted {
+        color: $text-muted !important;
+        font-weight: $font-weight-normal;
+      }
+    }
+
+    // Texto com emoji
+    p:first-child {
+      font-size: $font-size-base;
+      color: $text-primary;
+      font-weight: $font-weight-medium;
+
+      small {
+        font-size: $font-size-sm;
+      }
+    }
+  }
+
+  // ===================================
+  // LINKS SOCIAIS
+  // ===================================
+  .social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem !important;
+    flex-wrap: wrap;
+
+    .btn {
+      font-size: $font-size-sm;
+      padding: 0.5rem 1rem;
+      border-radius: $border-radius;
+      font-weight: $font-weight-medium;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: $transition-base;
+      min-height: 36px;
+      white-space: nowrap;
+
+      i {
+        font-size: 0.85rem;
+        opacity: 0.9;
+      }
+
+      // Botão externo (Wizarding World)
+      &.btn-outline-secondary {
+        color: $text-secondary;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: transparent;
+
+        &:hover {
+          color: $text-accent;
+          border-color: rgba(255, 215, 0, 0.5);
+          background: rgba(255, 215, 0, 0.1);
+          transform: $hover-transform;
+          text-decoration: none;
+
+          i {
+            opacity: 1;
+            color: $text-accent;
+          }
+        }
+
+        &:focus {
+          outline: 2px solid $text-accent;
+          outline-offset: 2px;
+          box-shadow: none;
+        }
+      }
+
+      // Botão interno (Como funciona)
+      &.btn-outline-info {
+        color: lighten(#17a2b8, 20%);
+        border: 1px solid rgba(23, 162, 184, 0.5);
+        background: transparent;
+
+        &:hover {
+          color: $white;
+          border-color: #17a2b8;
+          background: rgba(23, 162, 184, 0.8);
+          transform: $hover-transform;
+          text-decoration: none;
+
+          i {
+            opacity: 1;
+            color: $white;
+          }
+        }
+
+        &:focus {
+          outline: 2px solid #17a2b8;
+          outline-offset: 2px;
+          box-shadow: none;
+        }
+      }
+
+      // Estados active/pressed
+      &:active {
+        transform: $active-transform;
+      }
+    }
+
+    @media (max-width: map-get($grid-breakpoints, sm)) {
+      gap: 0.5rem;
+      margin-top: 1rem !important;
+
+      .btn {
+        font-size: $font-size-xs;
+        padding: 0.4rem 0.8rem;
+        min-height: 32px;
+
+        i {
+          font-size: 0.75rem;
+        }
+      }
+    }
+  }
+
+  // ===================================
+  // COPYRIGHT/CREDITS
+  // ===================================
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
+    margin-top: 1rem;
+    text-align: center;
+
+    p {
+      font-size: $font-size-xs;
+      color: $text-muted;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    a {
+      color: lighten($text-muted, 10%);
+      text-decoration: none;
+      transition: $transition-fast;
+
+      &:hover {
+        color: $text-accent;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // ===================================
+  // RESPONSIVIDADE
+  // ===================================
+  @media (max-width: map-get($grid-breakpoints, md)) {
+    .footer-content {
+      padding: 1.5rem 0 1rem;
+
+      p {
+        font-size: $font-size-xs;
+      }
+
+      p:first-child {
+        font-size: $font-size-sm;
+      }
+    }
+  }
+
+  @media (max-width: map-get($grid-breakpoints, sm)) {
+    .footer-content {
+      padding: 1rem 0;
+    }
+
+    .social-links {
+      flex-direction: column;
+      gap: 0.75rem;
+
+      .btn {
+        width: 100%;
+        max-width: 200px;
+        justify-content: center;
+      }
+    }
+  }
+
+  // ===================================
+  // MODO DE MOVIMENTO REDUZIDO
+  // ===================================
+  @media (prefers-reduced-motion: reduce) {
+    .btn {
+      transition: none !important;
+
+      &:hover {
+        transform: none !important;
+      }
+
+      &:active {
+        transform: none !important;
+      }
+    }
+  }
+
+  // ===================================
+  // TEMA ESCURO GARANTIDO
+  // ===================================
+  * {
+    color: inherit;
+  }
+
+  .text-muted {
+    color: $text-muted !important;
+  }
+
+  .btn-outline-secondary {
+    color: $text-secondary !important;
+  }
+
+  .btn-outline-info {
+    color: lighten(#17a2b8, 20%) !important;
+  }
+}

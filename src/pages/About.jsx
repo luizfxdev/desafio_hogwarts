@@ -21,7 +21,6 @@ const About = () => {
       }
     }
   };
-
   const itemVariants = {
     initial: { opacity: 0, y: 30 },
     animate: {
@@ -30,7 +29,6 @@ const About = () => {
       transition: { duration: 0.5 }
     }
   };
-
   return (
     <motion.div className="about-container" variants={containerVariants} initial="initial" animate="animate">
       <div className="container">
@@ -57,7 +55,8 @@ const About = () => {
                   </p>
                   <p className="card-text">
                     As perguntas foram cuidadosamente elaboradas para capturar os valores, atitudes e preferências dos
-                    participantes, proporcionando uma experiência única e divertida.
+                    participantes, proporcionando uma experiência única e divertida. Este quiz foi feito de um fã para
+                    os milhares fãs de Harry Potter e não tem fins comerciais.
                   </p>
                 </div>
               </div>
@@ -68,5 +67,4 @@ const About = () => {
     </motion.div>
   );
 };
-
 export default About;

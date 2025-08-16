@@ -1,89 +1,281 @@
 // src/styles/base/_reset.scss
-
-// Importa as variáveis para este arquivo
+// RESET BÁSICO E CONFIGURAÇÕES BASE
 @use '../abstracts/variables' as *;
 
-// Reset básico do navegador
+// ===================================
+// RESET BÁSICO
+// ===================================
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
+// ===================================
+// CONFIGURAÇÕES DE DOCUMENTO
+// ===================================
 html {
-  font-size: 16px; // Define a base para unidades rem
+  font-size: 16px;
   scroll-behavior: smooth;
+
+  // Desabilita scroll suave em caso de movimento reduzido
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
 }
 
 body {
   font-family: $font-family-base;
-  line-height: 1.6;
-  color: $dark-gray;
-  background-color: $white;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  color: $text-primary !important;
+  background-color: $bg-primary !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-  &:hover {
-    color: $info;
-  }
-}
-
+// ===================================
+// ELEMENTOS DE LISTA
+// ===================================
 ul,
 ol {
   list-style: none;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+// ===================================
+// LINKS
+// ===================================
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: $text-accent;
+  }
 }
 
-// Estilos para elementos de formulário e botões
+// ===================================
+// BOTÕES E ELEMENTOS INTERATIVOS
+// ===================================
 button,
 input,
 select,
 textarea {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
+  font: inherit;
   color: inherit;
+  background: none;
+  border: none;
+  outline: none;
 }
 
 button {
   cursor: pointer;
-  background: none;
-  border: none;
-}
 
-input[type='text'],
-input[type='email'],
-input[type='password'],
-textarea {
-  border: $border-width $border-style $medium-gray; // Linha corrigida
-  padding: $spacer * 0.5;
-  border-radius: $border-radius;
-  &:focus {
-    outline: none;
-    border-color: $info;
-    box-shadow: 0 0 0 0.2rem rgba($info, 0.25);
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 }
 
-// Esconder elementos visualmente, mas manter acessíveis
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
+// ===================================
+// IMAGENS E MÍDIA
+// ===================================
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+img {
+  border-style: none;
+}
+
+// ===================================
+// ELEMENTOS DE TEXTO
+// ===================================
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: $font-weight-semibold;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  color: $text-primary;
+}
+
+p {
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// ===================================
+// TABELAS
+// ===================================
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+// ===================================
+// ELEMENTOS DE FORMULÁRIO
+// ===================================
+fieldset {
+  border: none;
+}
+
+legend {
+  display: table;
+  max-width: 100%;
   padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+  color: inherit;
+  white-space: normal;
+}
+
+// ===================================
+// ELEMENTOS INLINE
+// ===================================
+b,
+strong {
+  font-weight: $font-weight-bold;
+}
+
+i,
+em {
+  font-style: italic;
+}
+
+small {
+  font-size: 0.875em;
+}
+
+// ===================================
+// ELEMENTOS DE CÓDIGO
+// ===================================
+code,
+kbd,
+samp,
+pre {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1em;
+}
+
+// ===================================
+// ELEMENTOS DE CITAÇÃO
+// ===================================
+blockquote {
+  margin: 1rem 0;
+  padding: 0 1rem;
+  border-left: 4px solid $text-accent;
+}
+
+// ===================================
+// ELEMENTOS DE SEPARAÇÃO
+// ===================================
+hr {
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 2rem 0;
+}
+
+// ===================================
+// SELEÇÃO DE TEXTO
+// ===================================
+::selection {
+  background: rgba(255, 215, 0, 0.3);
+  color: $white;
+}
+
+::-moz-selection {
+  background: rgba(255, 215, 0, 0.3);
+  color: $white;
+}
+
+// ===================================
+// FOCUS E ACESSIBILIDADE
+// ===================================
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid $text-accent;
+  outline-offset: 2px;
+}
+
+// ===================================
+// ELEMENTOS ESCONDIDOS
+// ===================================
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+// ===================================
+// GARANTIR TEMA ESCURO
+// ===================================
+.card,
+.modal,
+.dropdown-menu,
+.tooltip,
+.popover {
+  background-color: $bg-card !important;
+  color: $text-primary !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.text-muted {
+  color: $text-muted !important;
+}
+
+.bg-white,
+.bg-light {
+  background-color: $bg-card !important;
+  color: $text-primary !important;
+}
+
+// Override Bootstrap
+.btn-close {
+  filter: invert(1);
+}
+
+.form-control,
+.form-select {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: $text-primary !important;
+
+  &:focus {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    border-color: $text-accent !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25) !important;
+    color: $text-primary !important;
+  }
+
+  &::placeholder {
+    color: $text-muted !important;
+  }
 }

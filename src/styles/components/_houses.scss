@@ -1,0 +1,360 @@
+// src/styles/components/_houses.scss
+// ESTILOS PARA AS CASAS DE HOGWARTS
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ===================================
+// VARIÁVEIS CSS PARA CASAS
+// ===================================
+:root {
+  // Grifinória
+  --gryffindor-primary: #{$gryffindor-primary};
+  --gryffindor-secondary: #{$gryffindor-secondary};
+  --gryffindor-text: #{$gryffindor-text};
+
+  // Sonserina
+  --slytherin-primary: #{$slytherin-primary};
+  --slytherin-secondary: #{$slytherin-secondary};
+  --slytherin-text: #{$slytherin-text};
+
+  // Corvinal
+  --ravenclaw-primary: #{$ravenclaw-primary};
+  --ravenclaw-secondary: #{$ravenclaw-secondary};
+  --ravenclaw-text: #{$ravenclaw-text};
+
+  // Lufa-Lufa
+  --hufflepuff-primary: #{$hufflepuff-primary};
+  --hufflepuff-secondary: #{$hufflepuff-secondary};
+  --hufflepuff-text: #{$hufflepuff-text};
+}
+
+// ===================================
+// CLASSES PARA CADA CASA
+// ===================================
+.house-gryffindor {
+  --house-primary: var(--gryffindor-primary);
+  --house-secondary: var(--gryffindor-secondary);
+  --house-text-color: var(--gryffindor-text);
+
+  .house-gradient {
+    background: linear-gradient(135deg, var(--house-primary), var(--house-secondary));
+  }
+
+  .house-border {
+    border-color: var(--house-primary);
+  }
+
+  .house-text {
+    color: var(--house-primary);
+  }
+
+  .house-bg {
+    background-color: var(--house-primary);
+    color: var(--house-text-color);
+  }
+}
+
+.house-slytherin {
+  --house-primary: var(--slytherin-primary);
+  --house-secondary: var(--slytherin-secondary);
+  --house-text-color: var(--slytherin-text);
+
+  .house-gradient {
+    background: linear-gradient(135deg, var(--house-primary), var(--house-secondary));
+  }
+
+  .house-border {
+    border-color: var(--house-primary);
+  }
+
+  .house-text {
+    color: var(--house-primary);
+  }
+
+  .house-bg {
+    background-color: var(--house-primary);
+    color: var(--house-text-color);
+  }
+}
+
+.house-ravenclaw {
+  --house-primary: var(--ravenclaw-primary);
+  --house-secondary: var(--ravenclaw-secondary);
+  --house-text-color: var(--ravenclaw-text);
+
+  .house-gradient {
+    background: linear-gradient(135deg, var(--house-primary), var(--house-secondary));
+  }
+
+  .house-border {
+    border-color: var(--house-primary);
+  }
+
+  .house-text {
+    color: var(--house-primary);
+  }
+
+  .house-bg {
+    background-color: var(--house-primary);
+    color: var(--house-text-color);
+  }
+}
+
+.house-hufflepuff {
+  --house-primary: var(--hufflepuff-primary);
+  --house-secondary: var(--hufflepuff-secondary);
+  --house-text-color: var(--hufflepuff-text);
+
+  .house-gradient {
+    background: linear-gradient(135deg, var(--house-primary), var(--house-secondary));
+  }
+
+  .house-border {
+    border-color: var(--house-primary);
+  }
+
+  .house-text {
+    color: var(--house-primary);
+  }
+
+  .house-bg {
+    background-color: var(--house-primary);
+    color: var(--house-text-color);
+  }
+}
+
+// ===================================
+// RESULTADO DAS CASAS
+// ===================================
+.result-card {
+  background: var(--bg-card);
+  border: 2px solid var(--house-primary, $text-accent);
+  border-radius: $border-radius-lg;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--house-primary, $text-accent);
+  }
+
+  .house-crest {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    padding: 1rem;
+    background: var(--house-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    }
+  }
+
+  .house-name {
+    font-size: 2.5rem;
+    font-weight: $font-weight-bold;
+    font-family: $font-family-heading;
+    color: var(--house-primary, $text-accent);
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .house-description {
+    font-size: 1.1rem;
+    color: $text-secondary;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .house-traits {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    h4 {
+      color: var(--house-primary, $text-accent);
+      margin-bottom: 1rem;
+      font-family: $font-family-heading;
+    }
+
+    .traits-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+
+      .trait-badge {
+        background: var(--house-primary, $text-accent);
+        color: var(--house-text-color, $black);
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: $font-weight-medium;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+// ===================================
+// BOTÕES ESPECÍFICOS DAS CASAS
+// ===================================
+.btn-house {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--house-primary, $text-accent);
+  background: transparent;
+  color: var(--house-primary, $text-accent);
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: $transition-base;
+  border-radius: $border-radius;
+
+  &:hover {
+    background: var(--house-primary, $text-accent);
+    color: var(--house-text-color, $black);
+    transform: $hover-transform;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  &:focus {
+    outline: 2px solid var(--house-primary, $text-accent);
+    outline-offset: 2px;
+  }
+}
+
+// ===================================
+// ANIMAÇÕES ESPECÍFICAS DAS CASAS
+// ===================================
+@keyframes houseReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotateY(-30deg);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05) rotateY(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
+  }
+}
+
+.result-card.animate-reveal {
+  animation: houseReveal 1s ease-out forwards;
+}
+
+// ===================================
+// SPARKLES PARA RESULTADO
+// ===================================
+.sparkles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+
+  &::before,
+  &::after {
+    content: '✨';
+    position: absolute;
+    font-size: 1.5rem;
+    animation: sparkle 2s infinite;
+  }
+
+  &::before {
+    top: 20%;
+    left: 15%;
+    animation-delay: 0s;
+  }
+
+  &::after {
+    bottom: 20%;
+    right: 15%;
+    animation-delay: 1s;
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+// ===================================
+// RESPONSIVIDADE
+// ===================================
+@media (max-width: map-get($grid-breakpoints, md)) {
+  .result-card {
+    padding: 1.5rem;
+
+    .house-crest {
+      width: 100px;
+      height: 100px;
+
+      img {
+        width: 70px;
+        height: 70px;
+      }
+    }
+
+    .house-name {
+      font-size: 2rem;
+    }
+
+    .house-description {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: map-get($grid-breakpoints, sm)) {
+  .result-card {
+    padding: 1rem;
+
+    .house-crest {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1rem;
+
+      img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    .house-name {
+      font-size: 1.8rem;
+    }
+
+    .house-traits .traits-list {
+      .trait-badge {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.6rem;
+      }
+    }
+  }
+}

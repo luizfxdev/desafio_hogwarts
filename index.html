@@ -30,123 +30,411 @@
     <meta name="twitter:image" content="https://quiz-hogwarts.vercel.app/assets/twitter-card.png" />
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
-    <!-- A linha abaixo foi comentada para evitar o erro de sintaxe do manifest,
-          caso o arquivo site.webmanifest esteja ausente ou mal formatado.
-          Se você tiver um site.webmanifest válido, pode descomentar. -->
-    <!-- <link rel="manifest" href="/assets/icons/site.webmanifest" /> -->
     <!-- Preconnect para melhor performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <!-- Importação das fontes do Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..700&family=Inter:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <!-- Prefetch de recursos importantes -->
     <link rel="prefetch" href="/assets/houses/gryffindor/crest.png" />
     <link rel="prefetch" href="/assets/houses/slytherin/crest.png" />
     <link rel="prefetch" href="/assets/houses/ravenclaw/crest.png" />
     <link rel="prefetch" href="/assets/houses/hufflepuff/crest.png" />
     <!-- Theme Color -->
-    <meta name="theme-color" content="#ffc107" />
-    <meta name="msapplication-TileColor" content="#ffc107" />
+    <meta name="theme-color" content="#0a0a1f" />
+    <meta name="msapplication-TileColor" content="#0a0a1f" />
     <!-- Configurações de PWA -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Quiz Hogwarts" />
-    <!-- Loading styles inline para evitar FOUC -->
+
+    <!-- ESTILOS CRÍTICOS INLINE -->
     <style>
-      /* Loader inicial */
+      /* ===================================
+         ESTILOS CRÍTICOS PARA MAGICCARD
+         ================================= */
+      /* Propriedade CSS customizada para animação */
+      @property --rotate {
+        syntax: '<angle>';
+        initial-value: 132deg;
+        inherits: false;
+      }
+      /* Keyframe para rotação */
+      @keyframes spin {
+        0% {
+          --rotate: 0deg;
+        }
+        100% {
+          --rotate: 360deg;
+        }
+      }
+      /* Variáveis globais */
+      :root {
+        --card-max-width: min(90vw, 800px);
+        --card-min-height: min(70vh, 600px);
+        --border-width: 3px;
+        --border-radius: 12px;
+        --bg-primary: #0a0a1f;
+        --bg-card: #2a2a4a;
+        --text-primary: #e0e0e0;
+        --text-accent: #ffd700;
+      }
+      /* Reset e base */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      #root {
+        min-height: 100vh;
+        background: var(--bg-primary) !important;
+        position: relative;
+      }
+      /* Pattern de fundo sutil */
+      #root::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.03) 0%, transparent 40%),
+          radial-gradient(circle at 80% 80%, rgba(77, 166, 255, 0.03) 0%, transparent 40%),
+          radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      /* ===================================
+         CONTADOR DE PROGRESSO - POSIÇÃO CENTRALIZADA FORÇADA
+         ================================= */
+      .quiz-progress-wrapper {
+        position: fixed !important;
+        top: 2rem !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 1000 !important;
+        width: auto !important;
+        max-width: 300px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .quiz-progress-counter {
+        background: rgba(0, 0, 0, 0.8) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        padding: 0.8rem 1.5rem !important;
+        border-radius: 8px !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        font-size: 0.9rem !important;
+        font-weight: 500 !important;
+        text-align: center !important;
+        backdrop-filter: blur(10px) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+        white-space: nowrap !important;
+      }
+
+      /* ===================================
+         MAGIC CARD PRINCIPAL
+         ================================= */
+      .quiz-magic-card {
+        width: var(--card-max-width);
+        min-height: var(--card-min-height);
+        margin: 2rem auto;
+        padding: 0;
+        position: relative;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        background: transparent;
+        /* Sombra e glow */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 60px rgba(255, 215, 0, 0.1);
+        /* Borda animada */
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          padding: var(--border-width);
+          background: linear-gradient(var(--rotate), #ffd700, #ffed4e 43%, #ff6b35);
+          border-radius: inherit;
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask-composite: xor;
+          -webkit-mask-composite: xor;
+          animation: spin 2.5s linear infinite;
+          z-index: -1;
+        }
+        /* Fundo interno */
+        &::after {
+          content: '';
+          position: absolute;
+          inset: var(--border-width);
+          background: var(--bg-card);
+          border-radius: calc(var(--border-radius) - var(--border-width));
+          z-index: -1;
+        }
+        /* Conteúdo interno */
+        > * {
+          position: relative;
+          z-index: 1;
+        }
+      }
+      /* Container do conteúdo */
+      .quiz-content {
+        width: 100%;
+        height: 100%;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: inherit;
+      }
+      /* ===================================
+         LOADER INICIAL
+         ================================= */
       #initial-loader {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        background: linear-gradient(135deg, #0a0a1f, #1a1a3f);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         z-index: 9999;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Inter', sans-serif;
       }
       .loader-icon {
         font-size: 4rem;
         margin-bottom: 1rem;
-        animation: spin 2s linear infinite;
+        animation: magicalFloat 2s ease-in-out infinite;
+        filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
       }
       .loader-text {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         font-weight: 600;
-        color: #6c757d;
+        color: var(--text-accent);
         text-align: center;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
       }
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
+      .loader-text small {
+        display: block;
+        font-size: 1rem;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 0.5rem;
+        font-style: italic;
+      }
+      @keyframes magicalFloat {
+        0%,
         100% {
-          transform: rotate(360deg);
+          transform: translateY(0px) rotate(0deg);
+        }
+        25% {
+          transform: translateY(-10px) rotate(2deg);
+        }
+        50% {
+          transform: translateY(-15px) rotate(0deg);
+        }
+        75% {
+          transform: translateY(-10px) rotate(-2deg);
         }
       }
-      /* Hide loader quando app carrega */
+      /* Esconder loader quando app carrega */
       .app-loaded #initial-loader {
         opacity: 0;
         visibility: hidden;
-        transition: all 0.5s ease;
+        transition: all 0.8s ease;
+        pointer-events: none;
+      }
+      /* ===================================
+         ESTILOS BÁSICOS PARA DEMONSTRAÇÃO
+         ================================= */
+      .quiz-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .quiz-main-title {
+        font-size: clamp(2rem, 6vw, 3.5rem);
+        font-weight: 700;
+        color: var(--text-accent);
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        margin-bottom: 1rem;
+        font-family: 'Cinzel', serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        white-space: nowrap;
+      }
+      .quiz-main-title .castle-icon {
+        font-size: 1.2em;
+        line-height: 1;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .quiz-subtitle {
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.8);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.5;
+      }
+      .question-container {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 1rem 0;
+      }
+      .question-text {
+        font-size: clamp(1.3rem, 4vw, 2rem);
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 2rem;
+        line-height: 1.4;
+      }
+      .options-grid {
+        display: grid;
+        gap: 1rem;
+        width: 100%;
+        max-width: 500px;
+        margin: 1.5rem 0;
+      }
+      .option-button {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+        padding: 1rem 1.2rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 500;
+        text-align: left;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      .option-letter {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.5rem;
+        height: 1.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+      }
+      .option-text {
+        flex: 1;
+        line-height: 1.4;
+      }
+      .option-button:hover {
+        background-color: rgba(255, 215, 0, 0.15);
+        border-color: rgba(255, 215, 0, 0.5);
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 215, 0, 0.1);
+      }
+      /* Força o tema escuro */
+      .card,
+      .quiz-content,
+      .question-container {
+        background: transparent !important;
+        color: var(--text-primary) !important;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 215, 0, 0.6);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 215, 0, 0.8);
+      }
+
+      /* ===================================
+         RESPONSIVIDADE DO CONTADOR
+         ================================= */
+      @media (max-width: 768px) {
+        .quiz-progress-wrapper {
+          top: 1.5rem !important;
+        }
+        .quiz-progress-counter {
+          padding: 0.7rem 1.2rem !important;
+          font-size: 0.85rem !important;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .quiz-progress-wrapper {
+          top: 1rem !important;
+        }
+        .quiz-progress-counter {
+          padding: 0.6rem 1rem !important;
+          font-size: 0.8rem !important;
+        }
+      }
+
+      /* ===================================
+      ESTILOS PARA IMPRESSÃO
+      =================================== */
+      @media print {
+        .quiz-container {
+          background: #fff !important;
+          color: #000 !important;
+        }
+        .quiz-magic-card {
+          background: #fff !important;
+          box-shadow: none !important;
+          border: 2px solid #000 !important;
+        }
+        .quiz-magic-card::before,
+        .quiz-magic-card::after {
+          display: none !important;
+        }
+        .sparkles,
+        .transition-loading {
+          display: none !important;
+        }
+        .result-card {
+          box-shadow: none;
+          border: 2px solid #000;
+        }
       }
     </style>
   </head>
   <body>
-    <!-- Loader inicial -->
-    <div id="initial-loader">
-      <div class="loader-icon">🏰</div>
-      <div class="loader-text">
-        Carregando o Chapéu Seletor...
-        <small>Preparando a magia...</small>
-      </div>
-    </div>
-    <!-- Root da aplicação React -->
     <div id="root"></div>
-    <!-- Script principal -->
     <script type="module" src="/src/main.jsx"></script>
-    <!-- Script para remover loader -->
-    <script>
-      // Remove o loader quando a página carrega
-      window.addEventListener('load', function () {
-        setTimeout(function () {
-          document.body.classList.add('app-loaded');
-          setTimeout(function () {
-            const loader = document.getElementById('initial-loader');
-            if (loader) {
-              loader.remove();
-            }
-          }, 500);
-        }, 1000); // Aguarda 1 segundo para mostrar o loader
-      });
-      // Analytics básico (opcional)
-      if (typeof gtag !== 'undefined') {
-        gtag('config', 'GA_TRACKING_ID', {
-          page_title: 'Quiz do Chapéu Seletor',
-          page_location: window.location.href
-        });
-      }
-      // O bloco do Service Worker foi comentado para evitar o erro de MIME type,
-      // caso o arquivo sw.js esteja ausente ou não seja um script JavaScript válido.
-      // Se você pretende ter um Service Worker, precisará criar o arquivo public/sw.js
-      // com o código JavaScript apropriado e então poderá descomentar este bloco.
-      /*
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker
-            .register('/sw.js')
-            .then(function (registration) {
-              console.log('SW registrado com sucesso: ', registration.scope);
-            })
-            .catch(function (registrationError) {
-              console.log('Falha no registro do SW: ', registrationError);
-            });
-        });
-      }
-      */
-    </script>
   </body>
 </html>

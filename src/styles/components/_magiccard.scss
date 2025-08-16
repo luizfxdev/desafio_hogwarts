@@ -1,0 +1,171 @@
+// src/styles/components/_magiccard.scss
+// VERSÃO ATUALIZADA BASEADA EXATAMENTE NO HTML DE REFERÊNCIA
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ===================================
+// PROPRIEDADE CSS CUSTOMIZADA PARA ANIMAÇÃO
+// ===================================
+@property --rotate {
+  syntax: '<angle>';
+  initial-value: 132deg;
+  inherits: false;
+}
+
+// ===================================
+// KEYFRAMES PARA ANIMAÇÕES
+// ===================================
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
+
+@keyframes magicalGlow {
+  0%,
+  100% {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 60px rgba(255, 215, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 100px rgba(255, 215, 0, 0.2);
+  }
+}
+
+// ===================================
+// CLASSE PRINCIPAL DO MAGIC CARD
+// ===================================
+.quiz-magic-card {
+  // Dimensões responsivas (EXATAMENTE como no HTML)
+  width: $magic-card-max-width;
+  min-height: $magic-card-min-height;
+  max-width: 100%;
+
+  // Posicionamento
+  position: relative;
+  margin: 2rem auto;
+  padding: 0;
+
+  // Estilo base
+  background: transparent;
+  border-radius: $magic-border-radius;
+  overflow: hidden;
+
+  // Sombra e efeitos visuais (IGUAL AO HTML)
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 60px rgba(255, 215, 0, 0.1);
+
+  // Animação sutil de glow
+  animation: magicalGlow 4s ease-in-out infinite;
+
+  // ===================================
+  // PSEUDO-ELEMENTO: BORDA ANIMADA (IGUAL AO HTML)
+  // ===================================
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: $magic-border-width;
+    // Gradiente animado da borda (EXATAMENTE como no HTML)
+    background: linear-gradient(var(--rotate), $magic-gradient-start, $magic-gradient-middle 43%, $magic-gradient-end);
+    border-radius: inherit;
+    // Máscara para criar o efeito de borda
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    // Animação de rotação (IGUAL AO HTML)
+    animation: spin 2.5s linear infinite;
+    z-index: -1;
+  }
+
+  // ===================================
+  // PSEUDO-ELEMENTO: FUNDO INTERNO (IGUAL AO HTML)
+  // ===================================
+  &::after {
+    content: '';
+    position: absolute;
+    inset: $magic-border-width;
+    background: $bg-card;
+    border-radius: calc(#{$magic-border-radius} - #{$magic-border-width});
+    z-index: -1;
+    // Pattern sutil no fundo (como no HTML)
+    background-image: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(77, 166, 255, 0.02) 0%, transparent 50%);
+  }
+
+  // ===================================
+  // CONTEÚDO INTERNO
+  // ===================================
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  // ===================================
+  // ESTADOS DE INTERAÇÃO
+  // ===================================
+  &:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 100px rgba(255, 215, 0, 0.2);
+
+    &::before {
+      animation-duration: 1.8s; // Acelera no hover
+    }
+
+    &::after {
+      background: lighten($bg-card, 2%);
+    }
+  }
+}
+
+// ===================================
+// CONTAINER DO CONTEÚDO (IGUAL AO HTML)
+// ===================================
+.quiz-content {
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+  // Layout flexível (IGUAL AO HTML)
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: inherit;
+}
+
+// ===================================
+// RESPONSIVIDADE EXATA COMO NO HTML
+// ===================================
+@media (max-width: map-get($grid-breakpoints, md)) {
+  .quiz-magic-card {
+    margin: 1.5rem auto;
+    width: 95vw;
+
+    .quiz-content {
+      padding: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: map-get($grid-breakpoints, sm)) {
+  .quiz-magic-card {
+    margin: 1rem auto;
+
+    .quiz-content {
+      padding: 1rem;
+    }
+  }
+}
+
+// ===================================
+// MODO DE MOVIMENTO REDUZIDO
+// ===================================
+@media (prefers-reduced-motion: reduce) {
+  .quiz-magic-card {
+    animation: none !important;
+
+    &::before {
+      animation: none !important;
+    }
+  }
+}

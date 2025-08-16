@@ -2,29 +2,17 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * Componente Question - Renderiza uma pergunta do quiz com suas opções
- *
- * Props:
- * - question: objeto com id, text e options
- * - onAnswer: função callback chamada quando uma opção é selecionada
- * - questionNumber: número da pergunta atual
- * - totalQuestions: total de perguntas do quiz
+ * Componente Question - Renderiza apenas a pergunta e opções
+ * SEM progresso interno - progresso fica externo ao MagicCard
  */
-const Question = ({ question, onAnswer, questionNumber, totalQuestions }) => {
-  // Estado para controlar qual opção foi selecionada
+const Question = ({ question, onAnswer, questionNumber, totalQuestions, showProgress = false }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
-  /**
-   * Manipula a seleção de uma opção
-   * @param {number} index - índice da opção selecionada
-   * @param {object} option - objeto da opção selecionada
-   */
   const handleOptionSelect = (index, option) => {
     setSelectedOption(index);
     onAnswer(option);
   };
 
-  // Variantes de animação para o Framer Motion
   const containerVariants = {
     initial: {
       opacity: 0,
@@ -72,56 +60,40 @@ const Question = ({ question, onAnswer, questionNumber, totalQuestions }) => {
       animate="animate"
       exit="exit"
     >
-      {/* Header com progresso */}
-      <div className="question-header mb-4">
-        <div className="progress mb-3">
-          <div
-            className="progress-bar bg-warning"
-            role="progressbar"
-            style={{ width: `${(questionNumber / totalQuestions) * 100}%` }}
-            aria-valuenow={questionNumber}
-            aria-valuemin="0"
-            aria-valuemax={totalQuestions}
-          />
-        </div>
-        <small className="text-muted">
-          Pergunta {questionNumber} de {totalQuestions}
-        </small>
-      </div>
+      {/* REMOVIDO: Header com progresso - agora fica externo */}
+
       {/* Título da pergunta */}
       <motion.h2
-        className="question-title mb-4"
+        className="question-title"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.5 }}
       >
         {question.text}
       </motion.h2>
+
       {/* Lista de opções */}
       <div className="options-container">
         {question.options.map((option, index) => (
           <motion.button
             key={index}
-            className={`btn option-btn w-100 mb-3 ${
-              selectedOption === index ? 'btn-warning selected' : 'btn-outline-secondary'
-            }`}
+            className={`btn option-btn w-100 ${selectedOption === index ? 'selected' : ''}`}
             variants={optionVariants}
             whileHover="hover"
             whileTap="tap"
             onClick={() => handleOptionSelect(index, option)}
             disabled={selectedOption !== null}
           >
-            <div className="d-flex align-items-center">
-              <span className="option-letter me-3">{String.fromCharCode(65 + index)}</span>
-              <span className="option-text text-start">{option.label}</span>
-            </div>
+            <span className="option-letter">{String.fromCharCode(65 + index)}</span>
+            <span className="option-text">{option.label}</span>
           </motion.button>
         ))}
       </div>
+
       {/* Indicador de seleção */}
       {selectedOption !== null && (
         <motion.div
-          className="selection-indicator mt-4 text-center"
+          className="selection-indicator"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}

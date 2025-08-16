@@ -1,9 +1,24 @@
 // src/styles/base/_typography.scss
-
-// Importa as variáveis para este arquivo
+// CONFIGURAÇÕES DE TIPOGRAFIA
 @use '../abstracts/variables' as *;
 
-// Estilos globais de tipografia
+// ===================================
+// CONFIGURAÇÕES BASE DE TIPOGRAFIA
+// ===================================
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: 1.6;
+  color: $text-primary !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+// ===================================
+// HEADINGS
+// ===================================
 h1,
 h2,
 h3,
@@ -11,63 +26,289 @@ h4,
 h5,
 h6 {
   font-family: $font-family-heading;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   line-height: 1.2;
-  margin-top: 0;
-  margin-bottom: $spacer;
-  color: $dark-gray;
+  margin-bottom: 0.5rem;
+  color: $text-primary !important;
 }
 
 h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: $font-weight-bold;
 }
 
 h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: $font-weight-semibold;
 }
 
 h3 {
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-size: clamp(1.2rem, 3vw, 2rem);
 }
 
+h4 {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+h5 {
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+}
+
+h6 {
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
+}
+
+// ===================================
+// TEXTO CORPO
+// ===================================
 p {
-  margin-bottom: $spacer;
-  line-height: 1.7;
-  color: $medium-gray;
-}
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: $text-primary;
 
-// Links
-a {
-  color: $info;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 
-// Classes de texto utilitárias
+// ===================================
+// TEXTO PEQUENO
+// ===================================
+small {
+  font-size: $font-size-sm;
+  color: $text-muted;
+}
+
+// ===================================
+// TEXTO ENFATIZADO
+// ===================================
+strong,
+b {
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+}
+
+em,
+i {
+  font-style: italic;
+}
+
+// ===================================
+// LINKS
+// ===================================
+a {
+  color: $text-accent;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: lighten($text-accent, 10%);
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: 2px solid $text-accent;
+    outline-offset: 2px;
+  }
+}
+
+// ===================================
+// CÓDIGO
+// ===================================
+code,
+kbd,
+samp {
+  font-family: 'Courier New', Courier, monospace;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.9em;
+  color: $text-primary;
+}
+
+pre {
+  font-family: 'Courier New', Courier, monospace;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1rem 0;
+  color: $text-primary;
+
+  code {
+    background: none;
+    padding: 0;
+  }
+}
+
+// ===================================
+// CITAÇÕES
+// ===================================
+blockquote {
+  border-left: 4px solid $text-accent;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: $text-muted;
+
+  cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: $font-size-sm;
+    color: $text-accent;
+
+    &::before {
+      content: '— ';
+    }
+  }
+}
+
+// ===================================
+// LISTAS
+// ===================================
+ul,
+ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  color: $text-primary;
+
+  li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+    color: inherit;
+  }
+
+  &.unstyled {
+    list-style: none;
+    padding-left: 0;
+  }
+}
+
+// ===================================
+// CLASSES UTILITÁRIAS DE TEXTO
+// ===================================
 .text-center {
   text-align: center;
 }
-
-.text-right {
-  text-align: right;
-}
-
 .text-left {
   text-align: left;
 }
+.text-right {
+  text-align: right;
+}
+.text-justify {
+  text-align: justify;
+}
 
-.text-muted {
-  color: $medium-gray !important;
+.text-uppercase {
+  text-transform: uppercase;
+}
+.text-lowercase {
+  text-transform: lowercase;
+}
+.text-capitalize {
+  text-transform: capitalize;
 }
 
 .text-primary {
-  color: $info !important;
+  color: $text-primary !important;
+}
+.text-secondary {
+  color: $text-secondary !important;
+}
+.text-muted {
+  color: $text-muted !important;
+}
+.text-accent {
+  color: $text-accent !important;
+}
+.text-white {
+  color: $white !important;
 }
 
-.text-warning {
-  color: $warning !important;
+.font-weight-light {
+  font-weight: $font-weight-light !important;
+}
+.font-weight-normal {
+  font-weight: $font-weight-normal !important;
+}
+.font-weight-medium {
+  font-weight: $font-weight-medium !important;
+}
+.font-weight-semibold {
+  font-weight: $font-weight-semibold !important;
+}
+.font-weight-bold {
+  font-weight: $font-weight-bold !important;
 }
 
-// Adicione mais estilos de tipografia conforme necessário
+.font-size-sm {
+  font-size: $font-size-sm !important;
+}
+.font-size-base {
+  font-size: $font-size-base !important;
+}
+.font-size-lg {
+  font-size: $font-size-lg !important;
+}
+.font-size-xl {
+  font-size: $font-size-xl !important;
+}
+
+// ===================================
+// CLASSES ESPECIAIS DO PROJETO
+// ===================================
+.magical-text {
+  color: $text-accent;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+  font-family: $font-family-heading;
+}
+
+.subtitle-text {
+  color: $text-secondary;
+  font-size: $font-size-lg;
+  line-height: 1.5;
+}
+
+.description-text {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+// ===================================
+// RESPONSIVIDADE DE TEXTO
+// ===================================
+@media (max-width: map-get($grid-breakpoints, md)) {
+  body {
+    font-size: 0.95rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    margin-bottom: 0.8rem;
+  }
+}
+
+@media (max-width: map-get($grid-breakpoints, sm)) {
+  body {
+    font-size: 0.9rem;
+  }
+
+  blockquote {
+    padding-left: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  ul,
+  ol {
+    padding-left: 1.2rem;
+  }
+}
