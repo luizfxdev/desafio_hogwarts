@@ -1,6 +1,8 @@
 // src/styles/base/_typography.scss
-// CONFIGURAÇÕES DE TIPOGRAFIA
+// CONFIGURAÇÕES DE TIPOGRAFIA - VERSÃO CORRIGIDA
 @use '../abstracts/variables' as *;
+@use 'sass:color';
+@use 'sass:map';
 
 // ===================================
 // CONFIGURAÇÕES BASE DE TIPOGRAFIA
@@ -102,7 +104,7 @@ a {
   transition: color 0.3s ease;
 
   &:hover {
-    color: lighten($text-accent, 10%);
+    color: color.adjust($text-accent, $lightness: 10%);
     text-decoration: underline;
   }
 
@@ -278,7 +280,7 @@ ol {
 // ===================================
 // RESPONSIVIDADE DE TEXTO
 // ===================================
-@media (max-width: map-get($grid-breakpoints, md)) {
+@media (max-width: map.get($grid-breakpoints, md)) {
   body {
     font-size: 0.95rem;
   }
@@ -297,7 +299,7 @@ ol {
   }
 }
 
-@media (max-width: map-get($grid-breakpoints, sm)) {
+@media (max-width: map.get($grid-breakpoints, sm)) {
   body {
     font-size: 0.9rem;
   }

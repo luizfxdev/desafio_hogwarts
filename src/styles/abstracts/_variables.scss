@@ -1,6 +1,8 @@
 // src/styles/abstracts/_variables.scss
 // VERSÃO CORRIGIDA BASEADA NO HTML DE REFERÊNCIA
 
+@use 'sass:color';
+
 // ===================================
 // CORES PRINCIPAIS
 // ===================================
@@ -38,25 +40,25 @@ $house-colors: (
     primary: $gryffindor-primary,
     secondary: $gryffindor-secondary,
     text: $gryffindor-text,
-    gradient: linear-gradient(135deg, $gryffindor-primary, darken($gryffindor-primary, 15%))
+    gradient: linear-gradient(135deg, $gryffindor-primary, color.adjust($gryffindor-primary, $lightness: -15%))
   ),
   slytherin: (
     primary: $slytherin-primary,
     secondary: $slytherin-secondary,
     text: $slytherin-text,
-    gradient: linear-gradient(135deg, $slytherin-primary, darken($slytherin-primary, 15%))
+    gradient: linear-gradient(135deg, $slytherin-primary, color.adjust($slytherin-primary, $lightness: -15%))
   ),
   ravenclaw: (
     primary: $ravenclaw-primary,
     secondary: $ravenclaw-secondary,
     text: $ravenclaw-text,
-    gradient: linear-gradient(135deg, $ravenclaw-primary, darken($ravenclaw-primary, 15%))
+    gradient: linear-gradient(135deg, $ravenclaw-primary, color.adjust($ravenclaw-primary, $lightness: -15%))
   ),
   hufflepuff: (
     primary: $hufflepuff-primary,
     secondary: $hufflepuff-secondary,
     text: $hufflepuff-text,
-    gradient: linear-gradient(135deg, $hufflepuff-primary, darken($hufflepuff-primary, 15%))
+    gradient: linear-gradient(135deg, $hufflepuff-primary, color.adjust($hufflepuff-primary, $lightness: -15%))
   )
 );
 

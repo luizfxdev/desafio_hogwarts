@@ -158,3 +158,48 @@
     z-index: 10;
   }
 }
+
+// ===================================
+// MIXINS DE RESPONSIVIDADE (LEGADO)
+// ===================================
+@mixin respond-to($breakpoint) {
+  @if map.has-key(v.$grid-breakpoints, $breakpoint) {
+    @media (min-width: map.get(v.$grid-breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint `#{$breakpoint}` não encontrado em `$grid-breakpoints`.";
+  }
+}
+
+@mixin respond-below($breakpoint) {
+  @if map.has-key(v.$grid-breakpoints, $breakpoint) {
+    @media (max-width: map.get(v.$grid-breakpoints, $breakpoint) - 1px) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint `#{$breakpoint}` não encontrado em `$grid-breakpoints`.";
+  }
+}
+
+// ===================================
+// MIXINS DE LAYOUT
+// ===================================
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

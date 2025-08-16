@@ -2,6 +2,8 @@
 // VERSÃO ATUALIZADA BASEADA EXATAMENTE NO HTML DE REFERÊNCIA
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
+@use 'sass:color';
+@use 'sass:map';
 
 // ===================================
 // PROPRIEDADE CSS CUSTOMIZADA PARA ANIMAÇÃO
@@ -113,7 +115,7 @@
     }
 
     &::after {
-      background: lighten($bg-card, 2%);
+      background: color.adjust($bg-card, $lightness: 2%);
     }
   }
 }
@@ -136,7 +138,7 @@
 // ===================================
 // RESPONSIVIDADE EXATA COMO NO HTML
 // ===================================
-@media (max-width: map-get($grid-breakpoints, md)) {
+@media (max-width: map.get($grid-breakpoints, md)) {
   .quiz-magic-card {
     margin: 1.5rem auto;
     width: 95vw;
@@ -147,7 +149,7 @@
   }
 }
 
-@media (max-width: map-get($grid-breakpoints, sm)) {
+@media (max-width: map.get($grid-breakpoints, sm)) {
   .quiz-magic-card {
     margin: 1rem auto;
 
