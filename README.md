@@ -2,7 +2,7 @@
 
 Um quiz interativo inspirado no universo mágico de Harry Potter para descobrir qual casa de Hogwarts é perfeita para você!
 
-![Preview do Quiz](https://via.placeholder.com/800x400/ffc107/000000?text=Quiz+Hogwarts+Preview)
+
 
 ## ✨ Características
 
@@ -279,6 +279,9 @@ O projeto está preparado para ser uma PWA:
 ## 📄 Licença
 
 Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para detalhes.
+Este projeto foi inspirado pela obra da autora J.K.Rowling e seu universo mágico. 
+O projeto foi criado por um fã objetivando apenas fins acadêmicos e não visa nenhum lucro. 
+Todos os direitos da autora estão preservados.
 
 ## ⚡ Performance
 
