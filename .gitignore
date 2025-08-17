@@ -90,7 +90,6 @@ dist
 
 # Gatsby files
 .cache/
-public
 
 # Storybook build outputs
 .out
@@ -155,8 +154,3 @@ firebase-debug.log
 *.backup
 *.bak
 *.orig
-
-# Package managers
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
