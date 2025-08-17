@@ -1,10 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
+
 /**
  * Configuração do Vite para o Quiz de Hogwarts
  *
  * Configurações incluem:
  * - Plugin React para JSX
+ * - Copia arquivos estáticos de public/assets para dist/assets
  * - Configurações de build otimizadas
  * - Configurações de desenvolvimento
  * - Suporte a Sass
@@ -18,13 +21,23 @@ export default defineConfig({
       babel: {
         plugins: ['@emotion/babel-plugin']
       }
+    }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'public/assets',
+          dest: ''
+        }
+      ]
     })
-  ], // Configurações do servidor de desenvolvimento
+  ],
+  // Configurações do servidor de desenvolvimento
   server: {
     port: 3000,
     open: true, // Abre automaticamente no browser
     host: true // Permite acesso externo
-  }, // Configurações de build
+  },
+  // Configurações de build
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
@@ -39,18 +52,19 @@ export default defineConfig({
           styles: ['bootstrap']
         }
       }
-    }, // Configurações de assets
+    },
     assetsInlineLimit: 4096 // 4kb
-  }, // Configurações de CSS
+  },
+  // Configurações de CSS
   css: {
     preprocessorOptions: {
       scss: {
-        // REMOVA a linha additionalData aqui!
-        // additionalData: `@import "src/styles/abstracts/_variables.scss"; @import "src/styles/abstracts/_mixins.scss";`
+        // Sem additionalData
       }
     },
     devSourcemap: true
-  }, // Configurações de resolução de módulos
+  },
+  // Configurações de resolução de módulos
   resolve: {
     alias: {
       '@': '/src',
@@ -59,13 +73,16 @@ export default defineConfig({
       '@data': '/src/data',
       '@styles': '/src/styles'
     }
-  }, // Configurações de otimização
+  },
+  // Configurações de otimização
   optimizeDeps: {
     include: ['react', 'react-dom', 'framer-motion', 'bootstrap']
-  }, // Configurações de preview
+  },
+  // Configurações de preview
   preview: {
     port: 4173,
     open: true
-  }, // Configurações de base URL (para deploy)
+  },
+  // Configurações de base URL (para deploy)
   base: './'
 });
